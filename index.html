@@ -892,76 +892,6 @@
     }
 
     /* ==========================================================================
-       SCENE SELECTOR DOCK (CINEMATIC SCENE JUMPING)
-       ========================================================================== */
-    .scenes-dock {
-      position: fixed;
-      left: 32px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      z-index: 90;
-    }
-
-    .scene-dot-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--color-dust-subtle);
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      font-family: var(--font-sans);
-      text-transform: uppercase;
-      transition: all 0.3s ease;
-      padding: 0.35rem 0.5rem;
-      border-radius: 9999px;
-    }
-
-    .scene-dot-indicator {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      transition: all 0.3s var(--ease-cinema);
-    }
-
-    .scene-dot-label {
-      opacity: 0;
-      transform: translateX(-8px);
-      transition: all 0.3s ease;
-      white-space: nowrap;
-      background: rgba(13, 20, 31, 0.75);
-      backdrop-filter: blur(12px);
-      padding: 0.25rem 0.65rem;
-      border-radius: 6px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--color-cream);
-    }
-
-    .scene-dot-btn:hover .scene-dot-label,
-    .scene-dot-btn.active .scene-dot-label {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .scene-dot-btn.active .scene-dot-indicator {
-      background: var(--color-saffron);
-      border-color: var(--color-saffron-light);
-      transform: scale(1.5);
-      box-shadow: 0 0 12px var(--color-saffron);
-    }
-
-    .scene-dot-btn.active {
-      color: var(--color-saffron-light);
-    }
-
-    /* ==========================================================================
        MEMORIES STORYTELLING CHAPTERS (THE RICH ILLUSTRATED JOURNEY)
        ========================================================================== */
     .story-journey-section {
@@ -1955,9 +1885,6 @@
       .meta-tag {
         display: none;
       }
-      .scenes-dock {
-        display: none;
-      }
       .interactive-flag-dock {
         right: 1.5rem;
         top: 20%;
@@ -2063,30 +1990,6 @@
       </div>
     </nav>
   </header>
-
-  <!-- Scenes Quick Jump Dock (Left side) -->
-  <aside class="scenes-dock" id="scenes-dock" aria-label="Scene Navigator">
-    <button class="scene-dot-btn active" data-slide="0">
-      <div class="scene-dot-indicator"></div>
-      <span class="scene-dot-label">01 • THE 15 AUGUST STREET</span>
-    </button>
-    <button class="scene-dot-btn" data-slide="1">
-      <div class="scene-dot-indicator"></div>
-      <span class="scene-dot-label">02 • BHARAT CHAI STALL</span>
-    </button>
-    <button class="scene-dot-btn" data-slide="2">
-      <div class="scene-dot-indicator"></div>
-      <span class="scene-dot-label">03 • BOY WITH TRICOLOR</span>
-    </button>
-    <button class="scene-dot-btn" data-slide="3">
-      <div class="scene-dot-indicator"></div>
-      <span class="scene-dot-label">04 • SOARING KITES & SKY</span>
-    </button>
-    <button class="scene-dot-btn" data-slide="4">
-      <div class="scene-dot-indicator"></div>
-      <span class="scene-dot-label">05 • GOLDEN DUSK & CHORUS</span>
-    </button>
-  </aside>
 
   <!-- ==========================================================================
        HERO SECTION: THE NOSTALGIC MEMORY ARCHIVE
@@ -2472,8 +2375,7 @@
   <div class="keyboard-legend-bar">
     <kbd>SPACE</kbd> PLAY/PAUSE &nbsp;&bull;&nbsp;
     <kbd>F</kbd> HOIST FLAG &nbsp;&bull;&nbsp;
-    <kbd>M</kbd> MUTE &nbsp;&bull;&nbsp; 
-    <kbd>1-5</kbd> JUMP SCENE
+    <kbd>M</kbd> MUTE
   </div>
 
   <!-- ==========================================================================
@@ -2579,42 +2481,6 @@
           }
         });
       }
-
-      // Scene navigation links & active observer
-      const sceneTargets = [
-        '#hero',
-        '#chapter-1',
-        '#chapter-2',
-        '#chapter-3',
-        '#chapter-4'
-      ];
-
-      document.querySelectorAll('.scene-dot-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const idx = parseInt(btn.dataset.slide, 10);
-          const target = document.querySelector(sceneTargets[idx]);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        });
-      });
-
-      // Update scene dots on scroll
-      window.addEventListener('scroll', () => {
-        const scrollY = window.scrollY;
-        const windowHeight = window.innerHeight;
-        
-        sceneTargets.forEach((sel, i) => {
-          const el = document.querySelector(sel);
-          if (!el) return;
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= windowHeight * 0.45 && rect.bottom >= windowHeight * 0.2) {
-            document.querySelectorAll('.scene-dot-btn').forEach((b, dotIdx) => {
-              b.classList.toggle('active', dotIdx === i);
-            });
-          }
-        });
-      }, { passive: true });
 
       // ==========================================
       // ARTWORK HOTSPOTS INTERACTIVE TOGGLE
@@ -3359,14 +3225,6 @@
             break;
           case 'm':
             ambientToggle.click();
-            break;
-          case '1':
-          case '2':
-          case '3':
-          case '4':
-          case '5':
-            const idx = parseInt(e.key, 10) - 1;
-            switchSlide(idx);
             break;
         }
       });
