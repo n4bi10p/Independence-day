@@ -1843,9 +1843,9 @@
               <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"/><rect x="13" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"/></svg>
             </span>
           </button>
-          <button class="nav-icon-btn" id="ambient-sound-toggle" title="Toggle morning soundscape" aria-label="Toggle sound">
+          <button class="nav-icon-btn" id="ambient-sound-toggle" title="Mute / unmute song (M)" aria-label="Mute song">
             <span id="ambient-sound-icon" style="display:grid;place-items:center;">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor" stroke="none"/><path d="M16 9l4 6M20 9l-4 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor" stroke="none"/><path d="M15 9a5 5 0 0 1 0 6"/><path d="M17.5 7a8 8 0 0 1 0 10"/></svg>
             </span>
           </button>
           <button class="nav-icon-btn" id="toggle-hotspots-btn" title="Explore artwork details" aria-label="Explore artwork">
@@ -2722,18 +2722,36 @@
         }, 3200);
       }
 
+      let isSongMuted = false;
       const ambientToggle = document.getElementById('ambient-sound-toggle');
+      // repurposed: M button now mutes the song (YouTube player)
+      ambientToggle.title = "Mute / unmute song (M)";
+      ambientToggle.setAttribute('aria-label', 'Mute song');
       ambientToggle.addEventListener('click', () => {
-        isAmbientActive = !isAmbientActive;
-        ambientToggle.classList.toggle('active-glow', isAmbientActive);
-        if (isAmbientActive) {
-          initAmbientAudio();
-          if (ambientGain) ambientGain.gain.setTargetAtTime(0.12, audioCtx.currentTime, 0.5);
-          document.getElementById('ambient-sound-icon').innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor" stroke="none"/><path d="M15 9a5 5 0 0 1 0 6"/><path d="M17.5 7a8 8 0 0 1 0 10"/></svg>';
-        } else {
-          if (ambientGain) ambientGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.5);
-          if (birdInterval) clearInterval(birdInterval);
-          document.getElementById('ambient-sound-icon').innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor" stroke="none"/><path d="M16 9l4 6M20 9l-4 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
+        isSongMuted = !isSongMuted;
+        // YouTube player mute
+        if (ytPlayer && ytPlayer.mute && ytPlayer.unMute && ytPlayer.isMuted) {
+          try {
+            if (isSongMuted) ytPlayer.mute();
+            else ytPlayer.unMute();
+            // sync with actual state
+            isSongMuted = ytPlayer.isMuted();
+          } catch (e) { /* fallback to toggle */ }
+        } else if (ytPlayer && ytPlayer.setVolume) {
+          try { ytPlayer.setVolume(isSongMuted ? 0 : 100); } catch (e) {}
+        }
+        // also mute ambient bed so M feels global
+        if (ambientGain) {
+          try {
+            ambientGain.gain.setTargetAtTime(isSongMuted ? 0 : 0.12, audioCtx ? audioCtx.currentTime : 0, 0.2);
+          } catch (e) {}
+        }
+        ambientToggle.classList.toggle('active-glow', isSongMuted);
+        const iconEl = document.getElementById('ambient-sound-icon');
+        if (iconEl) {
+          iconEl.innerHTML = isSongMuted
+            ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor" stroke="none"/><path d="M16 9l4 6M20 9l-4 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>'
+            : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor" stroke="none"/><path d="M15 9a5 5 0 0 1 0 6"/><path d="M17.5 7a8 8 0 0 1 0 10"/></svg>';
         }
       });
 
