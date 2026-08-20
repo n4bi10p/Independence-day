@@ -2124,55 +2124,9 @@
         </button>
 
         <div class="community-memories-grid" id="community-memories-grid">
-          <!-- Default Seed Memories -->
-          <div class="memory-postcard">
-            <span class="postcard-pin">📌</span>
-            <div class="postcard-postage-stamp" style="background-image: url('/assets/artwork.png');">
-              <span class="stamp-deno">15 AUG</span>
-            </div>
-            <p class="postcard-text">“Running through the colony with my grandfather on his scooter, holding a small paper flag so it would flutter in the wind.”</p>
-            <div class="postcard-author">
-              <span>— Rahul K.</span>
-              <span>Nagpur, 1998</span>
-            </div>
-          </div>
-
-          <div class="memory-postcard">
-            <span class="postcard-pin">📌</span>
-            <div class="postcard-postage-stamp" style="background-image: url('/assets/artwork.png'); background-position: 45% 72%;">
-              <span class="stamp-deno">15 AUG</span>
-            </div>
-            <p class="postcard-text">“The sweet smell of Boondi and hot jalebis handed to us after the flag hoisting ceremony at school.”</p>
-            <div class="postcard-author">
-              <span>— Ananya S.</span>
-              <span>Kolkata, 2004</span>
-            </div>
-          </div>
-
-          <div class="memory-postcard">
-            <span class="postcard-pin">📌</span>
-            <div class="postcard-postage-stamp" style="background-image: url('/assets/artwork.png'); background-position: 12% 64%;">
-              <span class="stamp-deno">15 AUG</span>
-            </div>
-            <p class="postcard-text">“Lata Didi's voice coming from every neighbor's window at 8 AM. Goosebumps every single August.”</p>
-            <div class="postcard-author">
-              <span>— Vikramaditya</span>
-              <span>Varanasi, 1992</span>
-            </div>
-          </div>
-
-          <div class="memory-postcard">
-            <span class="postcard-pin">📌</span>
-            <div class="postcard-postage-stamp" style="background-image: url('/assets/artwork.png'); background-position: 55% 14%;">
-              <span class="stamp-deno">15 AUG</span>
-            </div>
-            <p class="postcard-text">“Climbing the water tank ladder on our terrace just to untangle a tricolor kite from the TV antenna.”</p>
-            <div class="postcard-author">
-              <span>— Simranjeet</span>
-              <span>Amritsar, 2001</span>
-            </div>
-          </div>
+          <!-- memories are rendered dynamically from localStorage — no hardcoded cards -->
         </div>
+        <p id="memories-empty" style="text-align:center; color: rgba(250,246,238,0.50); font-size:0.85rem; margin-top:1.5rem; display:none;">No memories yet — be the first to pin yours ✨</p>
       </div>
     </section>
   </main>
@@ -2952,6 +2906,7 @@
       const closeMemoryModal = document.getElementById('close-memory-modal');
       const memoryForm = document.getElementById('memory-form');
       const memoriesGrid = document.getElementById('community-memories-grid');
+      const memoriesEmpty = document.getElementById('memories-empty');
 
       function openModal() { memoryModal.classList.add('active'); }
       function closeModal() { memoryModal.classList.remove('active'); }
@@ -2959,13 +2914,11 @@
       if (openMemoryModalBtn) openMemoryModalBtn.addEventListener('click', openModal);
       if (openMemoryHeroBtn) openMemoryHeroBtn.addEventListener('click', openModal);
       if (closeMemoryModal) closeMemoryModal.addEventListener('click', closeModal);
-      // close on backdrop click
       if (memoryModal) {
         memoryModal.addEventListener('click', (e) => {
           if (e.target === memoryModal) closeModal();
         });
       }
-      // ENTER THE MEMORY — smooth scroll to memories journey
       const enterMemoryBtn = document.getElementById('enter-memory-btn');
       if (enterMemoryBtn) {
         enterMemoryBtn.addEventListener('click', (e) => {
@@ -2979,35 +2932,79 @@
         });
       }
 
+      // — Persistent memories (localStorage), no hardcoded cards —
+      const MEMORIES_KEY = 'ind_memories_v1';
+
+      function escapeHtml(s) {
+        const d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+      }
+
+      function createMemoryCard(m) {
+        const card = document.createElement('div');
+        card.className = 'memory-postcard';
+        card.dataset.id = m.id;
+        const stampPos = m.stampPos || '84% 56%';
+        const safeText = escapeHtml(m.text);
+        const safeAuthor = escapeHtml(m.author);
+        const safeDate = escapeHtml(m.dateLabel || 'Just Now');
+        card.innerHTML = `
+          <span class="postcard-pin">📌</span>
+          <div class="postcard-postage-stamp" style="background-image: url('/assets/artwork.png'); background-position: ${stampPos};">
+            <span class="stamp-deno">15 AUG</span>
+          </div>
+          <p class="postcard-text">“${safeText}”</p>
+          <div class="postcard-author">
+            <span>— ${safeAuthor}</span>
+            <span>${safeDate}</span>
+          </div>
+        `;
+        return card;
+      }
+
+      function loadMemories() {
+        try { return JSON.parse(localStorage.getItem(MEMORIES_KEY) || '[]'); } catch { return []; }
+      }
+      function saveMemories(arr) {
+        localStorage.setItem(MEMORIES_KEY, JSON.stringify(arr));
+      }
+      function renderMemories() {
+        const arr = loadMemories();
+        memoriesGrid.innerHTML = '';
+        if (arr.length === 0) {
+          if (memoriesEmpty) memoriesEmpty.style.display = 'block';
+          return;
+        }
+        if (memoriesEmpty) memoriesEmpty.style.display = 'none';
+        // newest first
+        arr.slice().reverse().forEach(m => memoriesGrid.appendChild(createMemoryCard(m)));
+      }
+      // initial render
+      renderMemories();
+
       memoryForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const text = document.getElementById('user-memory-text').value.trim();
-        const author = document.getElementById('user-memory-name').value.trim();
-
-          if (text && author) {
-          const card = document.createElement('div');
-          card.className = 'memory-postcard';
-          const stampPos = ['84% 56%', '45% 72%', '12% 64%', '55% 14%', '42% 92%'][Math.floor(Math.random() * 5)];
-          card.innerHTML = `
-            <span class="postcard-pin">📌</span>
-            <div class="postcard-postage-stamp" style="background-image: url('/assets/artwork.png'); background-position: ${stampPos};">
-              <span class="stamp-deno">15 AUG</span>
-            </div>
-            <p class="postcard-text">“${text}”</p>
-            <div class="postcard-author">
-              <span>— ${author}</span>
-              <span>Just Now</span>
-            </div>
-          `;
-          memoriesGrid.prepend(card);
-          closeModal();
-          memoryForm.reset();
-
-          // Scroll into view
-          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          spawnPetalsShower();
-          renderPetals();
-        }
+        const textEl = document.getElementById('user-memory-text');
+        const authorEl = document.getElementById('user-memory-name');
+        const text = textEl.value.trim();
+        const author = authorEl.value.trim();
+        if (!text || !author) return;
+        const stampPos = ['84% 56%', '45% 72%', '12% 64%', '55% 14%', '42% 92%'][Math.floor(Math.random() * 5)];
+        const now = new Date();
+        const dateLabel = now.toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
+        const mem = { id: String(Date.now()), text, author, dateLabel, stampPos, ts: Date.now() };
+        const arr = loadMemories();
+        arr.push(mem);
+        saveMemories(arr);
+        renderMemories();
+        closeModal();
+        memoryForm.reset();
+        // highlight newest
+        const newest = memoriesGrid.firstElementChild;
+        if (newest) newest.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        spawnPetalsShower();
+        renderPetals();
       });
 
       // ==========================================
