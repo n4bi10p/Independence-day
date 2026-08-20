@@ -1075,10 +1075,13 @@
       bottom: 28px;
       left: 50%;
       transform: translateX(-50%);
-      width: min(95%, 640px);
+      width: 576px;
+      max-width: calc(100vw - 32px);
+      height: 106.5px;
       z-index: 120;
-      padding: 0.55rem 1rem 1.40rem 1rem;
+      padding: 14px 18px 28px 18px;
       border-radius: 9999px;
+      box-sizing: border-box;
       display: flex;
       align-items: center;
       gap: 1rem;
@@ -1754,10 +1757,11 @@
         display: none;
       }
       .floating-audio-dock {
-        width: 94%;
+        width: min(94vw, 576px);
         bottom: 18px;
-        padding: 0.9rem 1.1rem 1.7rem 1.1rem;
-        border-radius: 20px;
+        padding: 14px 18px 28px 18px;
+        height: 106.5px;
+        border-radius: 9999px;
       }
       .whisper-quote-dock {
         bottom: 100px;
