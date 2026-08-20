@@ -2111,9 +2111,6 @@
             <span>ENTER THE MEMORY</span>
             <span>&darr;</span>
           </a>
-          <button class="secondary-glass-btn" id="hotspots-hero-toggle">
-            <span>🎨 EXPLORE SCENE DETAILS</span>
-          </button>
           <button class="secondary-glass-btn" id="open-memory-modal-hero">
             <span>✍️ SHARE YOUR MEMORY</span>
           </button>
@@ -3238,9 +3235,28 @@
       function openModal() { memoryModal.classList.add('active'); }
       function closeModal() { memoryModal.classList.remove('active'); }
 
-      openMemoryModalBtn.addEventListener('click', openModal);
+      if (openMemoryModalBtn) openMemoryModalBtn.addEventListener('click', openModal);
       if (openMemoryHeroBtn) openMemoryHeroBtn.addEventListener('click', openModal);
-      closeMemoryModal.addEventListener('click', closeModal);
+      if (closeMemoryModal) closeMemoryModal.addEventListener('click', closeModal);
+      // close on backdrop click
+      if (memoryModal) {
+        memoryModal.addEventListener('click', (e) => {
+          if (e.target === memoryModal) closeModal();
+        });
+      }
+      // ENTER THE MEMORY — smooth scroll to memories journey
+      const enterMemoryBtn = document.getElementById('enter-memory-btn');
+      if (enterMemoryBtn) {
+        enterMemoryBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = document.getElementById('memories-journey');
+          if (target) {
+            const navH = document.getElementById('main-nav')?.offsetHeight || 70;
+            const top = target.getBoundingClientRect().top + window.scrollY - navH - 12;
+            window.scrollTo({ top, behavior: 'smooth' });
+          }
+        });
+      }
 
       memoryForm.addEventListener('submit', (e) => {
         e.preventDefault();
