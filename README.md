@@ -2,7 +2,7 @@
 
 > A cinematic, nostalgic Independence Day memory experience — liquid-glass UI, illustrated storytelling, ambient sound, and a collective memory wall.
 
-**Live:** `https://n4bi10p.github.io/Independence-day` · **Repo:** `https://github.com/n4bi10p/Independence-day` · **Made by:** [Nabil](https://n4bi10p.github.io)
+**Live:** `https://15-august-beta.vercel.app` · **Repo:** `https://github.com/n4bi10p/Independence-day` · **Made by:** [Nabil](https://n4bi10p.github.io)
 
 ---
 
