@@ -899,7 +899,7 @@
     .story-journey-section {
       position: relative;
       z-index: 10;
-      padding: 8rem 2rem 12rem;
+      padding: 7rem 2rem 4rem;
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -937,7 +937,7 @@
     }
 
     .memory-chapter-card {
-      margin-bottom: 11rem;
+      margin-bottom: 6rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4rem;
@@ -945,6 +945,9 @@
       opacity: 0;
       transform: translateY(50px);
       transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .memory-chapter-card:last-child {
+      margin-bottom: 2rem;
     }
 
     .memory-chapter-card.in-view {
@@ -1462,7 +1465,7 @@
     .memory-wall-section {
       position: relative;
       z-index: 10;
-      padding: 6rem 2rem 14rem;
+      padding: 2.5rem 2rem 10rem;
       max-width: 1100px;
       margin: 0 auto;
       text-align: center;
@@ -1766,8 +1769,11 @@
       }
       .memory-chapter-card {
         grid-template-columns: 1fr;
-        gap: 2.5rem;
-        margin-bottom: 7rem;
+        gap: 2rem;
+        margin-bottom: 4rem;
+      }
+      .memory-chapter-card:last-child {
+        margin-bottom: 1.5rem;
       }
       .memory-chapter-card.reverse-layout {
         direction: ltr;
