@@ -1516,28 +1516,29 @@
 
     .postcard-pin {
       position: absolute;
-      top: 14px;
-      right: 16px;
+      top: 10px;
+      right: 12px;
       font-size: 0.9rem;
       z-index: 2;
     }
 
     .postcard-postage-stamp {
       position: absolute;
-      top: 14px;
-      right: 44px;
-      width: 36px;
-      height: 44px;
+      top: 12px;
+      right: 36px;
+      width: 32px;
+      height: 40px;
       background-size: cover;
-      background-position: 84% 56%;
-      border: 1.5px dashed rgba(243, 181, 82, 0.6);
-      border-radius: 4px;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+      background-position: center;
+      border: 1.5px dashed rgba(243, 181, 82, 0.55);
+      border-radius: 3px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
       display: flex;
       align-items: flex-end;
       justify-content: center;
       padding-bottom: 2px;
       pointer-events: none;
+      flex-shrink: 0;
     }
 
     .stamp-deno {
@@ -1556,6 +1557,9 @@
       line-height: 1.5;
       color: var(--color-cream);
       margin-bottom: 1rem;
+      padding-right: 52px;
+      padding-top: 2px;
+      min-height: 44px;
     }
 
     .postcard-author {
