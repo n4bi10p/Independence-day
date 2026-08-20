@@ -1839,6 +1839,31 @@
       .player-play-btn { width: 34px; height: 34px; }
       .made-by-nabil { bottom: 10px; right: 10px; font-size: 0.55rem; padding: 0.3rem 0.6rem; }
       .community-memories-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+      /* background video — zoom-fit, not cropped */
+      .fixed-bg-stage { height: 100dvh; }
+      .bg-video-wrapper { top: 0; left: 0; width: 100%; height: 100%; transform: none !important; }
+      .bg-video-element {
+        top: 0; left: 0; width: 100%; height: 100%;
+        min-width: 0; min-height: 0;
+        transform: none !important;
+        object-fit: cover;
+        object-position: center 42%;
+      }
+      /* footer — bottom center on mobile, just above player so it's visible */
+      .made-by-nabil {
+        left: 50%; right: auto;
+        transform: translateX(-50%);
+        bottom: 106px;
+        z-index: 121;
+        white-space: nowrap;
+      }
+    }
+    @media (max-width: 400px) {
+      .nav-bar { gap: 0.25rem; padding: 0.22rem 0.28rem; }
+      .nav-tabs { gap: 0.06rem; padding: 0.12rem; }
+      .nav-tab { padding: 0.28rem 0.5rem; font-size: 0.54rem; }
+      .nav-live-pill { display: none; }
+      .nav-icon-btn { width: 26px; height: 26px; }
     }
   </style>
 </head>
