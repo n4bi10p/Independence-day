@@ -1,0 +1,3359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>15 August — India, As We Remember It</title>
+  <meta name="description" content="A cinematic nostalgic Indian Independence Day interactive memory experience with liquid-glass interface, ambient radio, and illustrated storytelling.">
+
+  <!-- Google Fonts: Tiro Devanagari Hindi, Playfair Display, Cormorant Garamond, Plus Jakarta Sans, Caveat (Handwritten memories) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Tiro+Devanagari+Hindi:ital@0;1&family=Rozha+One&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS & COLOR PALETTE
+       ========================================================================== */
+    :root {
+      --color-saffron: #EB7424;
+      --color-saffron-light: #F7974E;
+      --color-saffron-dark: #C65314;
+      --color-saffron-glow: rgba(235, 116, 36, 0.35);
+
+      --color-green: #3D6B35;
+      --color-green-light: #5A8F4F;
+      --color-green-glow: rgba(61, 107, 53, 0.3);
+
+      --color-cream: #FAF6EE;
+      --color-cream-soft: #F2EADA;
+      --color-cream-muted: #E2D7C3;
+
+      --color-terracotta: #B35441;
+      --color-clay: #8C4233;
+      --color-golden-sun: #F3B552;
+      --color-marigold: #F5A623;
+
+      --color-navy-deep: #0D141F;
+      --color-navy: #151F2E;
+      --color-navy-light: #1E2D42;
+      --color-dust: rgba(242, 234, 218, 0.75);
+      --color-dust-subtle: rgba(242, 234, 218, 0.45);
+
+      /* Liquid Glass Architecture */
+      --glass-bg: rgba(21, 31, 46, 0.55);
+      --glass-bg-hover: rgba(27, 40, 58, 0.68);
+      --glass-bg-light: rgba(250, 246, 238, 0.12);
+      --glass-border: rgba(255, 255, 255, 0.16);
+      --glass-border-highlight: rgba(255, 255, 255, 0.32);
+      --glass-inner-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
+      --glass-drop-shadow: 0 20px 45px rgba(10, 16, 24, 0.45), 0 4px 12px rgba(0, 0, 0, 0.2);
+      --glass-blur: blur(28px) saturate(160%);
+
+      /* Typography */
+      --font-deva: 'Tiro Devanagari Hindi', 'Rozha One', serif;
+      --font-serif: 'Cormorant Garamond', 'Playfair Display', serif;
+      --font-display: 'Rozha One', 'Tiro Devanagari Hindi', serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-hand: 'Caveat', cursive;
+
+      --ease-cinema: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Base Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      background-color: var(--color-navy-deep);
+    }
+
+    body {
+      background-color: var(--color-navy-deep);
+      color: var(--color-cream);
+      font-family: var(--font-sans);
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      selection-background-color: var(--color-saffron);
+      selection-color: var(--color-navy-deep);
+    }
+
+    ::selection {
+      background: var(--color-saffron);
+      color: #fff;
+    }
+
+    .deva {
+      font-family: var(--font-deva);
+      font-weight: 400;
+    }
+
+    .serif {
+      font-family: var(--font-serif);
+    }
+
+    /* ==========================================================================
+       ANALOG FILM GRAIN & ATMOSPHERIC LAYERS
+       ========================================================================== */
+    .film-grain {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.045'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.7;
+    }
+
+    /* Mouse Following Cinematic Sunlight Halo */
+    .sunlight-cursor {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 2;
+      background: radial-gradient(750px circle at var(--mouse-x, 50vw) var(--mouse-y, 40vh), 
+        rgba(243, 181, 82, 0.12) 0%, 
+        rgba(235, 116, 36, 0.05) 35%, 
+        transparent 70%);
+      transition: opacity 0.4s ease;
+      will-change: background;
+    }
+
+    /* Soft ambient vignette - localized, never black */
+    .ambient-vignette {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      background: radial-gradient(ellipse at center, transparent 45%, rgba(13, 20, 31, 0.4) 100%);
+    }
+
+    /* ==========================================================================
+       FIXED HERO BACKGROUND VIDEO (CINEMATIC NOSTALGIC VIDEO & LIGHTING)
+       ========================================================================== */
+    .fixed-bg-stage {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      height: 100dvh;
+      z-index: 0;
+      overflow: hidden;
+      background: #0d141f;
+    }
+
+    .bg-video-wrapper {
+      position: absolute;
+      top: -3%; left: -3%; width: 106%; height: 106%;
+      overflow: hidden;
+      transform: scale(1.02) translate(var(--parallax-x, 0px), var(--parallax-y, 0px));
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+
+    .bg-video-element {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      object-position: center 38%;
+      filter: saturate(1.12) contrast(1.04) brightness(0.92);
+      pointer-events: none;
+      backface-visibility: hidden;
+    }
+
+    /* Warm golden color grade & localized text gradient */
+    .bg-video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(13, 20, 31, 0.36) 0%,
+        rgba(235, 116, 36, 0.04) 30%,
+        rgba(13, 20, 31, 0.45) 70%,
+        rgba(13, 20, 31, 0.88) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* Golden morning mist gradient for high visual drama */
+    .golden-haze {
+      position: absolute;
+      bottom: 0; left: 0; width: 100%; height: 55%;
+      background: linear-gradient(0deg, rgba(13, 20, 31, 0.85) 0%, rgba(243, 181, 82, 0.07) 50%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* Floating Kites in Sky */
+    .kites-canvas {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* ==========================================================================
+       LIQUID GLASS COMPONENT LIBRARY
+       ========================================================================== */
+    .liquid-glass {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      box-shadow: var(--glass-drop-shadow), var(--glass-inner-shadow);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.35s var(--ease-cinema), 
+                  border-color 0.35s ease, 
+                  background 0.35s ease, 
+                  box-shadow 0.35s ease;
+    }
+
+    /* Glass Specular Reflection Highlight */
+    .liquid-glass::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, 
+        transparent 5%, 
+        var(--glass-border-highlight) 30%, 
+        rgba(255, 255, 255, 0.75) 50%, 
+        var(--glass-border-highlight) 70%, 
+        transparent 95%);
+      pointer-events: none;
+    }
+
+    .liquid-glass:hover {
+      background: var(--glass-bg-hover);
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 28px 60px rgba(10, 16, 24, 0.55), var(--glass-inner-shadow);
+    }
+
+    .liquid-glass-pill {
+      background: rgba(21, 31, 46, 0.65);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: 9999px;
+      box-shadow: var(--glass-drop-shadow), var(--glass-inner-shadow);
+      display: inline-flex;
+      align-items: center;
+      padding: 0.65rem 1.35rem;
+      white-space: nowrap;
+      transition: all 0.3s var(--ease-cinema);
+    }
+
+    .liquid-glass-pill:hover {
+      transform: translateY(-2px);
+      background: rgba(27, 40, 58, 0.78);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: var(--color-saffron-light);
+    }
+
+    .liquid-glass-pill:active {
+      transform: scale(0.97);
+    }
+
+    /* ==========================================================================
+       TOP NAVIGATION BAR
+       ========================================================================== */
+    .nav-bar {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(94%, 1080px);
+      z-index: 100;
+      padding: 0.55rem 0.75rem;
+      border-radius: 9999px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.7rem;
+      animation: navFadeDown 1.2s var(--ease-cinema) forwards;
+      overflow: visible;
+      min-width: 0;
+    }
+
+    @keyframes navFadeDown {
+      from { opacity: 0; transform: translate(-50%, -20px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      text-decoration: none;
+      color: var(--color-cream);
+      padding: 0.3rem 0.75rem 0.3rem 0.4rem;
+      border-radius: 9999px;
+      transition: background 0.25s ease;
+    }
+
+    .nav-brand:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .brand-flag-icon {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      background: rgba(235, 116, 36, 0.18);
+      border: 1px solid rgba(235, 116, 36, 0.4);
+      border-radius: 50%;
+      font-size: 0.85rem;
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-cream);
+    }
+
+    .brand-date {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--color-saffron-light);
+      padding-left: 0.6rem;
+      border-left: 1px solid rgba(255,255,255,0.15);
+      font-family: var(--font-sans);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Center tab group */
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 0.15rem;
+      padding: 0.25rem;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      flex-shrink: 0;
+    }
+
+    .nav-tab {
+      position: relative;
+      background: none;
+      border: none;
+      color: var(--color-dust-subtle);
+      padding: 0.45rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      font-weight: 600;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.25s ease, background 0.25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      white-space: nowrap;
+    }
+
+    .nav-tab:hover {
+      color: var(--color-cream);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-tab.active {
+      color: var(--color-cream);
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .nav-tab .tab-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--color-saffron);
+      box-shadow: 0 0 8px var(--color-saffron);
+      opacity: 0;
+      transform: scale(0);
+      transition: opacity 0.3s ease, transform 0.3s var(--ease-spring);
+    }
+
+    .nav-tab.active .tab-dot {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Live visitors pill */
+    .nav-live-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.45rem 1rem;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-dust);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-shrink: 0;
+      min-width: 0;
+    }
+
+    .nav-live-pill strong {
+      color: var(--color-cream);
+      font-weight: 700;
+    }
+
+    .nav-live-pill .live-sep {
+      width: 1px;
+      height: 12px;
+      background: rgba(255,255,255,0.15);
+    }
+
+    .nav-live-pill .sub {
+      color: var(--color-dust-subtle);
+    }
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4ADE80;
+      box-shadow: 0 0 8px rgba(74, 222, 128, 0.8);
+      animation: pulseAnim 2s infinite ease-in-out;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulseAnim {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-shrink: 0;
+    }
+
+    .nav-icon-btn {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--color-dust);
+      border-radius: 50%;
+      cursor: pointer;
+      line-height: 0;
+      transition: all 0.25s var(--ease-cinema);
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .nav-icon-btn svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav-icon-btn:hover {
+      background: rgba(235, 116, 36, 0.18);
+      border-color: var(--color-saffron);
+      color: var(--color-saffron-light);
+      transform: translateY(-1px);
+    }
+
+    .nav-icon-btn.active-glow {
+      background: rgba(235, 116, 36, 0.22);
+      border-color: var(--color-saffron);
+      color: var(--color-cream);
+      box-shadow: 0 0 12px rgba(235, 116, 36, 0.3);
+    }
+
+    /* ==========================================================================
+       LIVE STATS STRIP (below hero)
+       ========================================================================== */
+    .live-stats-strip {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 0;
+      padding: 1.4rem 2rem;
+      border-radius: 20px;
+      animation: heroElemFade 1.4s var(--ease-cinema) 1s forwards;
+      opacity: 0;
+    }
+
+    .live-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0 2.4rem;
+      text-align: center;
+    }
+
+    .live-stat + .live-stat {
+      border-left: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .live-stat-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-dust-subtle);
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .live-stat-value {
+      font-family: var(--font-sans);
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--color-cream);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+
+    .live-stat-value.saffron { color: var(--color-saffron-light); }
+    .live-stat-value.green { color: #7EC97A; }
+
+    @media (max-width: 720px) {
+      .live-stats-strip { flex-direction: column; gap: 1rem; padding: 1.4rem 1.5rem; }
+      .live-stat { padding: 0; }
+      .live-stat + .live-stat { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.09); padding-top: 1rem; }
+    }
+
+    /* ==========================================================================
+       HERO SECTION: THE NOSTALGIC MEMORY ARCHIVE
+       ========================================================================== */
+    .hero-section {
+      min-height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 7.5rem 2rem 5rem;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .hero-container {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.45rem 1.1rem;
+      border-radius: 9999px;
+      background: rgba(235, 116, 36, 0.14);
+      border: 1px solid rgba(235, 116, 36, 0.35);
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-saffron-light);
+      margin-bottom: 2rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transform: translateY(15px);
+      animation: heroElemFade 1.2s var(--ease-cinema) 0.3s forwards;
+    }
+
+    .hero-main-title {
+      font-family: var(--font-deva);
+      font-size: clamp(2.75rem, 6.5vw, 5.8rem);
+      line-height: 1.12;
+      font-weight: 400;
+      color: var(--color-cream);
+      margin-bottom: 1.5rem;
+      text-shadow: 0 15px 40px rgba(10, 16, 24, 0.75), 0 2px 4px rgba(0, 0, 0, 0.5);
+      letter-spacing: -0.01em;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: heroElemFade 1.4s var(--ease-cinema) 0.5s forwards;
+    }
+
+    .hero-main-title .highlight-saffron {
+      color: var(--color-saffron-light);
+      text-shadow: 0 0 35px var(--color-saffron-glow);
+    }
+
+    .hero-narrative {
+      font-family: var(--font-serif);
+      font-size: clamp(1.2rem, 2vw, 1.65rem);
+      font-style: italic;
+      color: var(--color-dust);
+      max-width: 780px;
+      margin: 0 auto 2.75rem;
+      line-height: 1.65;
+      font-weight: 400;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: heroElemFade 1.4s var(--ease-cinema) 0.7s forwards;
+      text-shadow: 0 4px 18px rgba(10, 16, 24, 0.6);
+    }
+
+    .hero-actions-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: heroElemFade 1.4s var(--ease-cinema) 0.9s forwards;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--color-saffron), var(--color-saffron-dark));
+      color: #fff;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 1.05rem 2.4rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: 0 12px 35px rgba(235, 116, 36, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+      transition: all 0.35s var(--ease-spring);
+      text-decoration: none;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 18px 45px rgba(235, 116, 36, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    }
+
+    .primary-btn:active {
+      transform: scale(0.97);
+    }
+
+    .secondary-glass-btn {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      color: var(--color-cream);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 1.05rem 2.2rem;
+      border-radius: 9999px;
+      border: 1px solid var(--glass-border);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: var(--glass-drop-shadow), var(--glass-inner-shadow);
+      transition: all 0.3s var(--ease-cinema);
+      text-decoration: none;
+    }
+
+    .secondary-glass-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      color: var(--color-saffron-light);
+    }
+
+    .secondary-glass-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Floating Micro Metadata Pins */
+    .hero-meta-grid {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 12;
+    }
+
+    .meta-tag {
+      position: absolute;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      line-height: 1.7;
+      color: var(--color-dust-subtle);
+      text-transform: uppercase;
+      padding: 0.65rem 1.1rem;
+      border-radius: 14px;
+      background: rgba(13, 20, 31, 0.45);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      transition: all 0.4s ease;
+      pointer-events: auto;
+      cursor: default;
+    }
+
+    .meta-tag:hover {
+      color: var(--color-cream);
+      border-color: rgba(235, 116, 36, 0.4);
+      background: rgba(21, 31, 46, 0.65);
+      transform: translateY(-3px);
+    }
+
+    .meta-top-left { top: 22%; left: 4.5rem; }
+    .meta-top-right { top: 24%; right: 4.5rem; text-align: right; }
+    .meta-bottom-left { bottom: 18%; left: 4.5rem; }
+    .meta-bottom-right { bottom: 18%; right: 4.5rem; text-align: right; }
+
+    /* Interactive Artwork Hotspots Overlay */
+    .artwork-hotspots-stage {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 15;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .artwork-hotspots-stage.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .art-hotspot-pin {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s var(--ease-spring);
+    }
+
+    .hotspot-beacon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(235, 116, 36, 0.35);
+      border: 2px solid var(--color-saffron-light);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 0.9rem;
+      box-shadow: 0 0 20px var(--color-saffron);
+      position: relative;
+      animation: beaconPulse 2s infinite;
+    }
+
+    @keyframes beaconPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(235, 116, 36, 0.6); }
+      50% { transform: scale(1.15); box-shadow: 0 0 28px rgba(243, 181, 82, 0.9); }
+    }
+
+    .hotspot-card {
+      position: absolute;
+      bottom: 42px;
+      background: rgba(13, 20, 31, 0.85);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 14px;
+      padding: 0.85rem 1.25rem;
+      width: 260px;
+      text-align: left;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: all 0.3s var(--ease-cinema);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .art-hotspot-pin:hover .hotspot-card,
+    .art-hotspot-pin:focus .hotspot-card {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .hotspot-card-title {
+      font-family: var(--font-deva);
+      font-size: 1.1rem;
+      color: var(--color-saffron-light);
+      margin-bottom: 0.25rem;
+    }
+
+    .hotspot-card-desc {
+      font-family: var(--font-serif);
+      font-size: 0.82rem;
+      color: var(--color-cream);
+      line-height: 1.45;
+    }
+
+    /* Interactive Flag Hoist Widget */
+    .interactive-flag-dock {
+      position: absolute;
+      right: 3.5rem;
+      top: 52%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.85rem;
+      z-index: 20;
+    }
+
+    .flag-hoist-btn {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(235, 116, 36, 0.25), rgba(61, 107, 53, 0.25));
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 1.6rem;
+      transition: all 0.35s var(--ease-spring);
+    }
+
+    .flag-hoist-btn:hover {
+      transform: scale(1.15) rotate(6deg);
+      border-color: var(--color-saffron);
+      box-shadow: 0 20px 45px rgba(235, 116, 36, 0.45);
+    }
+
+    .flag-hoist-btn:active {
+      transform: scale(0.92);
+    }
+
+    .flag-dock-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-dust);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      opacity: 0.7;
+    }
+
+    @keyframes heroElemFade {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       SCENE SELECTOR DOCK (CINEMATIC SCENE JUMPING)
+       ========================================================================== */
+    .scenes-dock {
+      position: fixed;
+      left: 32px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      z-index: 90;
+    }
+
+    .scene-dot-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-dust-subtle);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      font-family: var(--font-sans);
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      padding: 0.35rem 0.5rem;
+      border-radius: 9999px;
+    }
+
+    .scene-dot-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      transition: all 0.3s var(--ease-cinema);
+    }
+
+    .scene-dot-label {
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      background: rgba(13, 20, 31, 0.75);
+      backdrop-filter: blur(12px);
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--color-cream);
+    }
+
+    .scene-dot-btn:hover .scene-dot-label,
+    .scene-dot-btn.active .scene-dot-label {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .scene-dot-btn.active .scene-dot-indicator {
+      background: var(--color-saffron);
+      border-color: var(--color-saffron-light);
+      transform: scale(1.5);
+      box-shadow: 0 0 12px var(--color-saffron);
+    }
+
+    .scene-dot-btn.active {
+      color: var(--color-saffron-light);
+    }
+
+    /* ==========================================================================
+       MEMORIES STORYTELLING CHAPTERS (THE RICH ILLUSTRATED JOURNEY)
+       ========================================================================== */
+    .story-journey-section {
+      position: relative;
+      z-index: 10;
+      padding: 8rem 2rem 12rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .journey-header {
+      text-align: center;
+      margin-bottom: 7rem;
+    }
+
+    .journey-kicker {
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      color: var(--color-saffron-light);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .journey-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      color: var(--color-cream);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
+
+    .journey-subtitle {
+      font-family: var(--font-sans);
+      font-size: 1.05rem;
+      color: var(--color-dust);
+      max-width: 600px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    .memory-chapter-card {
+      margin-bottom: 11rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .memory-chapter-card.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .memory-chapter-card.reverse-layout {
+      direction: rtl;
+    }
+
+    .memory-chapter-card.reverse-layout > * {
+      direction: ltr;
+    }
+
+    .chapter-glass-panel {
+      padding: 3.25rem 3rem;
+    }
+
+    .chapter-time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-saffron-light);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .chapter-time-badge::before {
+      content: '';
+      width: 18px;
+      height: 1px;
+      background: var(--color-saffron);
+    }
+
+    .chapter-heading {
+      font-family: var(--font-deva);
+      font-size: clamp(1.85rem, 2.8vw, 2.6rem);
+      line-height: 1.25;
+      color: var(--color-cream);
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .chapter-body-text {
+      font-family: var(--font-serif);
+      font-size: 1.28rem;
+      line-height: 1.8;
+      color: var(--color-dust);
+      margin-bottom: 2rem;
+    }
+
+    .chapter-quote-block {
+      border-left: 2px solid var(--color-saffron);
+      padding-left: 1.5rem;
+      margin-top: 1.75rem;
+      font-family: var(--font-deva);
+      font-size: 1.25rem;
+      color: var(--color-cream);
+      font-style: italic;
+    }
+
+    .chapter-quote-author {
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-dust-subtle);
+      margin-top: 0.5rem;
+      display: block;
+      font-style: normal;
+    }
+
+    /* Chapter Interactive Visual Node */
+    .chapter-visual-node {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255,255,255,0.3);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      aspect-ratio: 4/3;
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      transition: transform 0.6s var(--ease-cinema), box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+
+    .chapter-visual-node:hover {
+      transform: scale(1.025);
+      border-color: rgba(243, 181, 82, 0.5);
+      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.65), 0 0 30px rgba(235, 116, 36, 0.25);
+    }
+
+    .visual-node-expand-pill {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: rgba(13, 20, 31, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 9999px;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--color-cream);
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(-5px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .chapter-visual-node:hover .visual-node-expand-pill {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .visual-node-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(13, 20, 31, 0.88) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      pointer-events: none;
+    }
+
+    .visual-node-stamp {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-saffron-light);
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .visual-node-caption {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      color: var(--color-cream);
+      font-style: italic;
+    }
+
+
+    /* ==========================================================================
+       FLOATING LIQUID GLASS MUSIC PLAYER (VINYL DISC & LIVE WAVEFORM)
+       ========================================================================== */
+    .floating-audio-dock {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(92%, 480px);
+      z-index: 120;
+      padding: 0.85rem 1.1rem 1.7rem 1.1rem;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      /* Liquid glass: lighter + more transparent than generic panels */
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.05) 40%, rgba(255, 255, 255, 0.02) 60%, rgba(255, 255, 255, 0.09) 100%),
+        rgba(21, 31, 46, 0.38);
+      backdrop-filter: blur(36px) saturate(190%) brightness(1.08);
+      -webkit-backdrop-filter: blur(36px) saturate(190%) brightness(1.08);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        var(--glass-drop-shadow),
+        var(--glass-inner-shadow),
+        inset 0 0 24px rgba(255, 255, 255, 0.04);
+      animation: playerRise 1.2s var(--ease-spring) 1s forwards;
+    }
+
+    /* Specular sheen sweeping across the top edge of the glass */
+    .floating-audio-dock::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 8%; right: 8%;
+      height: 40%;
+      border-radius: 24px 24px 60% 60%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0));
+      pointer-events: none;
+    }
+
+    /* Soft refracted light bloom at the bottom of the glass */
+    .floating-audio-dock::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 15%; right: 15%;
+      height: 55%;
+      border-radius: 60% 60% 24px 24px;
+      background: radial-gradient(ellipse at bottom, rgba(255, 179, 71, 0.12), rgba(255, 179, 71, 0));
+      pointer-events: none;
+    }
+
+    @keyframes playerRise {
+      from { opacity: 0; transform: translate(-50%, 30px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+
+    .vinyl-artwork-wrapper {
+      position: relative;
+      width: 68px;
+      height: 68px;
+      flex-shrink: 0;
+    }
+
+    /* Grooved vinyl ring behind the artwork */
+    .vinyl-artwork-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      background:
+        repeating-radial-gradient(circle at center,
+          rgba(255,255,255,0.05) 0px,
+          rgba(255,255,255,0.05) 1px,
+          transparent 1px,
+          transparent 3px),
+        radial-gradient(circle, #1B2637 40%, #0D141F 100%);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.55);
+    }
+
+    .vinyl-disc {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      position: relative;
+      display: grid;
+      place-items: center;
+      animation: spinVinyl 14s linear infinite;
+      animation-play-state: paused;
+    }
+
+    .vinyl-disc.playing {
+      animation-play-state: running;
+    }
+
+    @keyframes spinVinyl {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Song thumbnail — fills the disc, rotates with it */
+    .vinyl-center-art {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background-image: url('/assets/artwork.png');
+      background-size: cover;
+      background-position: center;
+      box-shadow: inset 0 0 0 2px rgba(250, 246, 238, 0.85), 0 0 14px rgba(235, 116, 36, 0.45);
+    }
+
+    /* Spindle hole */
+    .vinyl-center-art::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 7px; height: 7px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: var(--color-navy-deep);
+      border: 2px solid rgba(250, 246, 238, 0.9);
+    }
+
+    /* Shine sweep across the disc while playing */
+    .vinyl-disc.playing .vinyl-center-art::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.22) 48%, transparent 60%);
+    }
+
+    .player-meta-column {
+      flex: 1;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .player-kicker-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .player-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.56rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #FF6B6B;
+      font-weight: 700;
+    }
+
+    .player-badge::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #FF6B6B;
+      box-shadow: 0 0 8px #FF6B6B;
+      animation: pulseAnim 1.6s infinite ease-in-out;
+    }
+
+    .audio-visualizer-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 12px;
+      margin-left: auto;
+    }
+
+    .v-bar {
+      width: 2.5px;
+      height: 3px;
+      background: var(--color-cream);
+      border-radius: 2px;
+      opacity: 0.5;
+      transition: height 0.15s ease;
+    }
+
+    .v-bar.animating {
+      animation: barJump 0.6s infinite alternate ease-in-out;
+      opacity: 1;
+      background: var(--color-golden-sun);
+    }
+
+    .v-bar:nth-child(1) { animation-delay: 0.1s; }
+    .v-bar:nth-child(2) { animation-delay: 0.3s; }
+    .v-bar:nth-child(3) { animation-delay: 0.15s; }
+    .v-bar:nth-child(4) { animation-delay: 0.4s; }
+    .v-bar:nth-child(5) { animation-delay: 0.22s; }
+    .v-bar:nth-child(6) { animation-delay: 0.35s; }
+
+    @keyframes barJump {
+      from { height: 3px; }
+      to { height: 12px; }
+    }
+
+    .track-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-cream);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 0.1rem;
+      line-height: 1.3;
+    }
+
+    .track-artist {
+      font-size: 0.75rem;
+      color: var(--color-dust);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.3;
+    }
+
+    .player-controls-row {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-shrink: 0;
+    }
+
+    .player-action-btn {
+      width: 34px;
+      height: 34px;
+      background: none;
+      border: none;
+      border-radius: 50%;
+      color: var(--color-cream);
+      cursor: pointer;
+      font-size: 1.05rem;
+      opacity: 0.75;
+      transition: all 0.2s ease;
+      display: grid;
+      place-items: center;
+    }
+
+    .player-action-btn:hover {
+      opacity: 1;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.08);
+    }
+
+    .player-play-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--color-cream);
+      border: none;
+      color: var(--color-navy-deep);
+      font-size: 1rem;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 4px 16px rgba(250, 246, 238, 0.3);
+      transition: all 0.25s var(--ease-spring);
+    }
+
+    .player-play-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 22px rgba(250, 246, 238, 0.45);
+      color: var(--color-navy-deep);
+    }
+
+    .player-play-btn:active {
+      transform: scale(0.92);
+    }
+
+    /* Seek row: times + bar with a draggable knob, below the main content */
+    .player-seek-row {
+      position: absolute;
+      left: 1.1rem;
+      right: 1.1rem;
+      bottom: 0.55rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .player-time {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--color-dust);
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+      min-width: 2.2em;
+    }
+
+    #player-time-total { text-align: left; }
+
+    .player-progress-dock {
+      position: relative;
+      flex: 1;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .player-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--color-saffron), var(--color-golden-sun));
+      border-radius: 999px;
+      transition: width 0.15s linear;
+    }
+
+    .player-progress-knob {
+      position: absolute;
+      top: 50%;
+      left: 0%;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--color-cream);
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+      transform: translate(-50%, -50%) scale(0);
+      transition: left 0.15s linear, transform 0.2s var(--ease-spring);
+      pointer-events: none;
+    }
+
+    .player-progress-dock:hover .player-progress-knob,
+    .player-progress-dock.dragging .player-progress-knob {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* Shared close button for modals (memory guestbook, artwork lightbox) */
+    .close-radio-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg-light);
+      color: var(--color-cream);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: all 0.2s ease;
+      z-index: 5;
+    }
+
+    .close-radio-btn:hover {
+      background: rgba(255, 107, 107, 0.2);
+      border-color: rgba(255, 107, 107, 0.5);
+      transform: rotate(90deg);
+    }
+
+    /* ==========================================================================
+       ROTATING FLOATING NOSTALGIC QUOTES (WHISPERS OF AUGUST)
+       ========================================================================== */
+    .whisper-quote-dock {
+      position: fixed;
+      bottom: 150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(90%, 750px);
+      text-align: center;
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0;
+      transition: opacity 1.2s var(--ease-cinema);
+    }
+
+    .whisper-quote-dock.visible {
+      opacity: 1;
+    }
+
+    .whisper-text {
+      font-family: var(--font-deva);
+      font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+      color: rgba(250, 246, 238, 0.85);
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.8);
+      letter-spacing: 0.02em;
+    }
+
+    /* ==========================================================================
+       MEMORY WALL & GUESTBOOK (LEAVE A NOSTALGIC MEMORY)
+       ========================================================================== */
+    .memory-wall-section {
+      position: relative;
+      z-index: 10;
+      padding: 6rem 2rem 14rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .memory-wall-card {
+      padding: 4.5rem 3rem;
+      border-radius: 32px;
+      background: rgba(21, 31, 46, 0.65);
+    }
+
+    .wall-title {
+      font-family: var(--font-deva);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      color: var(--color-cream);
+      margin-bottom: 1.25rem;
+      font-weight: 400;
+    }
+
+    .wall-subtext {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      color: var(--color-dust);
+      font-style: italic;
+      max-width: 650px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+    }
+
+    /* Floating Interactive Memory Postcards Grid */
+    .community-memories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.75rem;
+      margin-top: 3.5rem;
+      text-align: left;
+    }
+
+    .memory-postcard {
+      background: rgba(250, 246, 238, 0.06);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      padding: 1.75rem 1.6rem;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      position: relative;
+      transition: all 0.35s var(--ease-cinema);
+    }
+
+    .memory-postcard:hover {
+      transform: translateY(-4px) scale(1.02);
+      background: rgba(250, 246, 238, 0.1);
+      border-color: rgba(235, 116, 36, 0.4);
+      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.4);
+    }
+
+    .postcard-pin {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      font-size: 0.9rem;
+      z-index: 2;
+    }
+
+    .postcard-postage-stamp {
+      position: absolute;
+      top: 14px;
+      right: 44px;
+      width: 36px;
+      height: 44px;
+      background-size: cover;
+      background-position: 84% 56%;
+      border: 1.5px dashed rgba(243, 181, 82, 0.6);
+      border-radius: 4px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 2px;
+      pointer-events: none;
+    }
+
+    .stamp-deno {
+      font-size: 0.45rem;
+      font-weight: 800;
+      color: var(--color-cream);
+      background: rgba(13, 20, 31, 0.7);
+      padding: 1px 3px;
+      border-radius: 2px;
+      letter-spacing: 0.05em;
+    }
+
+    .postcard-text {
+      font-family: var(--font-hand);
+      font-size: 1.35rem;
+      line-height: 1.5;
+      color: var(--color-cream);
+      margin-bottom: 1rem;
+    }
+
+    .postcard-author {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-saffron-light);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Add Memory Modal */
+    .memory-input-modal {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(10, 16, 24, 0.85);
+      backdrop-filter: blur(18px);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .memory-input-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .memory-modal-box {
+      width: min(100%, 560px);
+      background: rgba(21, 31, 46, 0.85);
+      backdrop-filter: blur(32px);
+      border: 1px solid var(--glass-border-highlight);
+      border-radius: 28px;
+      padding: 3rem 2.5rem;
+      position: relative;
+      box-shadow: 0 35px 80px rgba(0,0,0,0.7), var(--glass-inner-shadow);
+      transform: scale(0.95);
+      transition: transform 0.4s var(--ease-spring);
+    }
+
+    .memory-input-modal.active .memory-modal-box {
+      transform: scale(1);
+    }
+
+    .modal-headline {
+      font-family: var(--font-deva);
+      font-size: 1.75rem;
+      color: var(--color-cream);
+      margin-bottom: 0.75rem;
+      font-weight: 400;
+    }
+
+    .modal-sub {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      color: var(--color-dust);
+      font-style: italic;
+      margin-bottom: 2rem;
+    }
+
+    .styled-textarea {
+      width: 100%;
+      height: 130px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      color: var(--color-cream);
+      padding: 1.25rem;
+      font-family: var(--font-hand);
+      font-size: 1.3rem;
+      resize: none;
+      margin-bottom: 1.25rem;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .styled-textarea:focus {
+      border-color: var(--color-saffron);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .styled-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      color: var(--color-cream);
+      padding: 0.85rem 1.25rem;
+      font-size: 0.9rem;
+      font-family: var(--font-sans);
+      margin-bottom: 1.75rem;
+      outline: none;
+    }
+
+    .styled-input:focus {
+      border-color: var(--color-saffron);
+    }
+
+    /* ==========================================================================
+       ARTWORK LIGHTBOX MODAL (HIGH-RES AUTHENTIC MASTER VIEWER)
+       ========================================================================== */
+    .artwork-lightbox-modal {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(8, 12, 18, 0.92);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      z-index: 1050;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s var(--ease-cinema);
+    }
+
+    .artwork-lightbox-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-modal-content {
+      width: min(96%, 1000px);
+      max-height: 90vh;
+      background: rgba(18, 26, 38, 0.88);
+      border: 1px solid var(--glass-border-highlight);
+      border-radius: 28px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.85);
+      transform: scale(0.94) translateY(15px);
+      transition: transform 0.45s var(--ease-spring);
+    }
+
+    .artwork-lightbox-modal.active .lightbox-modal-content {
+      transform: scale(1) translateY(0);
+    }
+
+    .lightbox-image-container {
+      position: relative;
+      width: 100%;
+      background: #090E15;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-height: 58vh;
+    }
+
+    .lightbox-master-img {
+      width: 100%;
+      height: auto;
+      max-height: 58vh;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .lightbox-stamp-tag {
+      position: absolute;
+      top: 1rem;
+      left: 1.25rem;
+      background: rgba(13, 20, 31, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 9999px;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      color: var(--color-golden-sun);
+      font-weight: 700;
+    }
+
+    .lightbox-details-panel {
+      padding: 1.75rem 2.25rem;
+      background: rgba(13, 20, 31, 0.65);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .lightbox-node-kicker {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      color: var(--color-saffron-light);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .lightbox-node-title {
+      font-family: var(--font-deva);
+      font-size: 1.5rem;
+      color: var(--color-cream);
+      margin-bottom: 0.5rem;
+    }
+
+    .lightbox-node-desc {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      color: var(--color-dust);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .lightbox-actions-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* ==========================================================================
+       MARIGOLD & FLOWER PETAL CELEBRATION CANVAS
+       ========================================================================== */
+    #celebration-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 500;
+    }
+
+    /* Ambient Dust Motes */
+    .ambient-motes-stage {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .mote-particle {
+      position: absolute;
+      background: rgba(250, 246, 238, 0.55);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(243, 181, 82, 0.4);
+      animation: floatMote linear infinite;
+    }
+
+    @keyframes floatMote {
+      0% { transform: translateY(105vh) translateX(0) rotate(0deg); opacity: 0; }
+      15% { opacity: 0.8; }
+      85% { opacity: 0.8; }
+      100% { transform: translateY(-10vh) translateX(40px) rotate(360deg); opacity: 0; }
+    }
+
+    /* Keyboard Shortcuts Tooltip */
+    .keyboard-legend-bar {
+      position: fixed;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--color-dust-subtle);
+      z-index: 110;
+      pointer-events: none;
+      text-transform: uppercase;
+    }
+
+    kbd {
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 4px;
+      padding: 1px 5px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--color-cream);
+      font-family: inherit;
+    }
+
+    /* ==========================================================================
+       RESPONSIVENESS & MOBILE OPTIMIZATIONS
+       ========================================================================== */
+    @media (max-width: 900px) {
+      .bg-video-wrapper {
+        top: 0; left: 0; width: 100%; height: 100%;
+        transform: none !important;
+      }
+      .bg-video-element {
+        object-position: 65% 35%; /* Optimally frames the boy with flag & street on portrait phones */
+        transform: translate(-50%, -50%) scale(1.02);
+      }
+      .memory-chapter-card {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        margin-bottom: 7rem;
+      }
+      .memory-chapter-card.reverse-layout {
+        direction: ltr;
+      }
+      .meta-tag {
+        display: none;
+      }
+      .scenes-dock {
+        display: none;
+      }
+      .interactive-flag-dock {
+        right: 1.5rem;
+        top: 20%;
+      }
+      .nav-center-status {
+        display: none;
+      }
+      .floating-audio-dock {
+        width: 94%;
+        bottom: 18px;
+        padding: 0.9rem 1.1rem 1.7rem 1.1rem;
+        border-radius: 20px;
+      }
+      .whisper-quote-dock {
+        bottom: 100px;
+      }
+      .hero-section {
+        padding-top: 7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Analog Film Grain & Atmospheric Sunlight Glow -->
+  <div class="film-grain"></div>
+  <div class="sunlight-cursor" id="sunlight-cursor"></div>
+  <div class="ambient-vignette"></div>
+
+  <!-- Marigold / Petals Celebration Canvas -->
+  <canvas id="celebration-canvas"></canvas>
+
+  <!-- Ambient Dust Particles -->
+  <div class="ambient-motes-stage" id="motes-stage"></div>
+
+  <!-- Background Nostalgic Video Stage -->
+  <div class="fixed-bg-stage" id="fixed-bg-stage">
+    <div class="bg-video-wrapper" id="bg-video-wrapper">
+      <video 
+        class="bg-video-element" 
+        id="bg-video" 
+        autoplay 
+        loop 
+        muted 
+        playsinline 
+        webkit-playsinline 
+        preload="auto" 
+        poster="/assets/artwork.png">
+        <source src="/assets/video.mp4" type="video/mp4">
+        <source src="/video.mp4" type="video/mp4">
+        <source src="./assets/video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="bg-video-overlay"></div>
+    </div>
+    <div class="golden-haze"></div>
+  </div>
+
+  <!-- Interactive Flying Kites Canvas -->
+  <canvas class="kites-canvas" id="kites-canvas"></canvas>
+
+  <!-- ==========================================================================
+       TOP LIQUID GLASS NAVIGATION BAR
+       ========================================================================== -->
+  <header>
+    <nav class="nav-bar liquid-glass" id="main-nav">
+      <a href="#hero" class="nav-brand" id="nav-brand-link">
+        <div class="brand-flag-icon">🇮🇳</div>
+        <div>
+          <div class="brand-title">15 August</div>
+          <div class="brand-date" id="live-ist-clock">08:15 AM IST</div>
+        </div>
+      </a>
+
+      <div class="nav-tabs" id="nav-tabs">
+        <a href="#hero" class="nav-tab active" data-tab="hero"><span class="tab-dot"></span>Home</a>
+        <a href="#memories-journey" class="nav-tab" data-tab="memories-journey"><span class="tab-dot"></span>Memories</a>
+      </div>
+
+      <div class="nav-right">
+        <div class="nav-live-pill" title="Live visitors on this page right now">
+          <div class="pulse-dot"></div>
+          <span><strong id="live-now">1</strong> live</span>
+          <span class="live-sep"></span>
+          <span class="sub"><strong id="live-total">1</strong> total</span>
+        </div>
+
+        <div class="nav-actions">
+          <button class="nav-icon-btn" id="toggle-video-motion" title="Pause or play cinematic motion" aria-label="Toggle motion">
+            <span id="motion-toggle-icon" style="display:grid;place-items:center;">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"/><rect x="13" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"/></svg>
+            </span>
+          </button>
+          <button class="nav-icon-btn" id="ambient-sound-toggle" title="Toggle morning soundscape" aria-label="Toggle sound">
+            <span id="ambient-sound-icon" style="display:grid;place-items:center;">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor" stroke="none"/><path d="M16 9l4 6M20 9l-4 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            </span>
+          </button>
+          <button class="nav-icon-btn" id="toggle-hotspots-btn" title="Explore artwork details" aria-label="Explore artwork">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-6 10-6 10 6 10 6-3 6-10 6-10-6-10-6z"/></svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Scenes Quick Jump Dock (Left side) -->
+  <aside class="scenes-dock" id="scenes-dock" aria-label="Scene Navigator">
+    <button class="scene-dot-btn active" data-slide="0">
+      <div class="scene-dot-indicator"></div>
+      <span class="scene-dot-label">01 • THE 15 AUGUST STREET</span>
+    </button>
+    <button class="scene-dot-btn" data-slide="1">
+      <div class="scene-dot-indicator"></div>
+      <span class="scene-dot-label">02 • BHARAT CHAI STALL</span>
+    </button>
+    <button class="scene-dot-btn" data-slide="2">
+      <div class="scene-dot-indicator"></div>
+      <span class="scene-dot-label">03 • BOY WITH TRICOLOR</span>
+    </button>
+    <button class="scene-dot-btn" data-slide="3">
+      <div class="scene-dot-indicator"></div>
+      <span class="scene-dot-label">04 • SOARING KITES & SKY</span>
+    </button>
+    <button class="scene-dot-btn" data-slide="4">
+      <div class="scene-dot-indicator"></div>
+      <span class="scene-dot-label">05 • GOLDEN DUSK & CHORUS</span>
+    </button>
+  </aside>
+
+  <!-- ==========================================================================
+       HERO SECTION: THE NOSTALGIC MEMORY ARCHIVE
+       ========================================================================== */ -->
+  <main>
+    <section class="hero-section" id="hero">
+      <div class="hero-container">
+        <div class="hero-kicker">
+          <span>🇮🇳 15 AUGUST 1947 — FOREVER</span>
+        </div>
+
+        <h1 class="hero-main-title" id="hero-headline">
+          आज फिर वो <span class="highlight-saffron">15 अगस्त</span> याद आया।
+        </h1>
+
+        <p class="hero-narrative">
+          The crisp smell of starched white school uniforms, a tiny paper flag pinned with pride, the sweet aroma of cardamom chai at the corner stall, rooftops alive with fluttering kites, and old melodies echoing from radio loudspeakers across every street.
+        </p>
+
+        <div class="hero-actions-row">
+          <a href="#memories-journey" class="primary-btn" id="enter-memory-btn">
+            <span>ENTER THE MEMORY</span>
+            <span>&darr;</span>
+          </a>
+          <button class="secondary-glass-btn" id="hotspots-hero-toggle">
+            <span>🎨 EXPLORE SCENE DETAILS</span>
+          </button>
+          <button class="secondary-glass-btn" id="open-memory-modal-hero">
+            <span>✍️ SHARE YOUR MEMORY</span>
+          </button>
+        </div>
+
+        <div class="live-stats-strip liquid-glass">
+          <div class="live-stat">
+            <div class="live-stat-label"><div class="pulse-dot"></div>Live viewers</div>
+            <div class="live-stat-value green" id="stat-live-now">1</div>
+          </div>
+          <div class="live-stat">
+            <div class="live-stat-label">Total visits</div>
+            <div class="live-stat-value" id="stat-live-total">1</div>
+          </div>
+          <div class="live-stat">
+            <div class="live-stat-label">Memories shared</div>
+            <div class="live-stat-value saffron" id="stat-memories">128</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Artwork Hotspot Markers (Toggled via button) -->
+      <div class="artwork-hotspots-stage" id="artwork-hotspots-stage">
+        <!-- Hotspot 1: Bharat Chai Stall -->
+        <div class="art-hotspot-pin" style="top: 62%; left: 16%;" tabindex="0">
+          <div class="hotspot-beacon">☕</div>
+          <div class="hotspot-card">
+            <div class="hotspot-card-title">भारत चाय स्टॉल</div>
+            <div class="hotspot-card-desc">“एक कटिंग चाय और देशभक्ति वाले गाने।” Elders gathering for morning papers, steaming brass samovar & cardamom aroma.</div>
+          </div>
+        </div>
+
+        <!-- Hotspot 2: Boy with Tiranga -->
+        <div class="art-hotspot-pin" style="top: 64%; right: 18%;" tabindex="0">
+          <div class="hotspot-beacon">🇮🇳</div>
+          <div class="hotspot-card" style="right: -40px; left: auto;">
+            <div class="hotspot-card-title">बाल तिरंगा (Boy with Flag)</div>
+            <div class="hotspot-card-desc">Standing proud in white school uniform on the stone parapet, holding the Tiranga high in golden sunrise rays.</div>
+          </div>
+        </div>
+
+        <!-- Hotspot 3: Akashvani Loudspeakers -->
+        <div class="art-hotspot-pin" style="top: 26%; left: 28%;" tabindex="0">
+          <div class="hotspot-beacon">📻</div>
+          <div class="hotspot-card">
+            <div class="hotspot-card-title">आकाशवाणी लाउडस्पीकर</div>
+            <div class="hotspot-card-desc">Cone loudspeakers tied with wires on wooden posts, broadcasting national anthems across the whole colony.</div>
+          </div>
+        </div>
+
+        <!-- Hotspot 4: Tricolor Kites -->
+        <div class="art-hotspot-pin" style="top: 18%; left: 52%;" tabindex="0">
+          <div class="hotspot-beacon">🪁</div>
+          <div class="hotspot-card">
+            <div class="hotspot-card-title">छत पर पतंगें (Soaring Kites)</div>
+            <div class="hotspot-card-desc">Tricolor paper kites flying against the historic temple shikhars and mosque minarets bathed in golden light.</div>
+          </div>
+        </div>
+
+        <!-- Hotspot 5: School Children Parade -->
+        <div class="art-hotspot-pin" style="top: 68%; left: 44%;" tabindex="0">
+          <div class="hotspot-beacon">🎒</div>
+          <div class="hotspot-card">
+            <div class="hotspot-card-title">प्रभात फेरी (Morning Parade)</div>
+            <div class="hotspot-card-desc">Schoolchildren in crisp blue-and-white uniforms, holding small fluttering paper flags along decorated alleys.</div>
+          </div>
+        </div>
+
+        <!-- Hotspot 6: Rangoli & Celebrations -->
+        <div class="art-hotspot-pin" style="top: 86%; left: 42%;" tabindex="0">
+          <div class="hotspot-beacon">🌸</div>
+          <div class="hotspot-card">
+            <div class="hotspot-card-title">15 AUGUST रंगोली</div>
+            <div class="hotspot-card-desc">Fresh chalk floral rangoli on the cobblestone street wishing everyone a blessed Independence Day.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating Micro Editorial Metadata Pins -->
+      <div class="hero-meta-grid" id="hero-meta-tags">
+        <div class="meta-tag meta-top-left">
+          <strong>NEW DELHI &bull; 07:30 AM</strong><br>
+          RED FORT PARADE &bull; DRUM ROLLS ECHOING
+        </div>
+        <div class="meta-tag meta-top-right">
+          <strong>OLD STREETS &bull; VARANASI</strong><br>
+          JALEBI CONES &bull; MARIGOLD RIBBONS
+        </div>
+        <div class="meta-tag meta-bottom-left">
+          <strong>ROOFTOPS &bull; AHMEDABAD / PUNE</strong><br>
+          TRICOLOR KITES DANCING IN MONSOON BREEZE
+        </div>
+        <div class="meta-tag meta-bottom-right">
+          <strong>CHAI STALL &bull; KOLKATA</strong><br>
+          “AE MERE WATAN KE LOGON” PLAYING ON TAPE
+        </div>
+      </div>
+
+      <!-- Interactive Flag Hoist Widget -->
+      <div class="interactive-flag-dock">
+        <button class="flag-hoist-btn" id="flag-hoist-trigger" title="Hoist the Tricolor & Shower Petals">
+          🇮🇳
+        </button>
+        <span class="flag-dock-label">HOIST FLAG &bull; जय हिन्द</span>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         MEMORIES STORYTELLING CHAPTERS
+         ========================================================================== -->
+    <section class="story-journey-section" id="memories-journey">
+      <div class="journey-header">
+        <div class="journey-kicker">ARCHIVE OF CHILDHOOD SENSES</div>
+        <h2 class="journey-title">Five Moments That Define 15 August</h2>
+        <p class="journey-subtitle">Every lane in India awoke to its own quiet rhythm before the country united under one tricolor sky.</p>
+      </div>
+
+      <!-- Chapter 1 -->
+      <article class="memory-chapter-card" id="chapter-1">
+        <div class="chapter-glass-panel liquid-glass">
+          <div class="chapter-time-badge">07:00 AM &bull; THE SCHOOL ASSEMBLY</div>
+          <h3 class="chapter-heading">सफेद वर्दी और वो छोटा सा तिरंगा।</h3>
+          <p class="chapter-body-text">
+            Ironing the spotless white uniform the night before. Polishing black Bata shoes till they mirrored the morning sun. Standing in neat rows on damp assembly grounds as the principal unrolled the flag, raining rose and marigold petals upon everyone below.
+          </p>
+          <div class="chapter-quote-block">
+            “15 August was the one day we ran to school with pure joy.”
+            <span class="chapter-quote-author">— Memory from St. Xavier's Ground, 1996</span>
+          </div>
+        </div>
+        <div class="chapter-visual-node" 
+             style="background-image: url('/assets/artwork.png'); background-position: 45% 72%; background-size: 260%;"
+             data-art-title="01 • The School Assembly & Morning Parade"
+             data-art-desc="Schoolchildren marching down decorated cobblestone alleys in crisp blue-and-white uniforms, holding miniature paper flags in the golden dawn."
+             title="Click to view full authentic master artwork">
+          <div class="visual-node-expand-pill">🔍 VIEW ARTWORK</div>
+          <div class="visual-node-overlay">
+            <span class="visual-node-stamp">MEMORY NODE 01 &bull; MORNING PARADE</span>
+            <span class="visual-node-caption">Children in crisp white uniforms holding small fluttering paper flags</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Chapter 2 -->
+      <article class="memory-chapter-card reverse-layout" id="chapter-2">
+        <div class="chapter-glass-panel liquid-glass">
+          <div class="chapter-time-badge">09:15 AM &bull; THE CORNER CHAI STALL</div>
+          <h3 class="chapter-heading">इलायची वाली चाय और रेडियो की धुन।</h3>
+          <p class="chapter-body-text">
+            The neighborhood elders gathered around Sharmaji's tea stall. The sweet steam of cardamom and ginger boiling in a dented brass vessel, while an old Murphy transistor broadcast the Prime Minister's address through the morning drizzle.
+          </p>
+          <div class="chapter-quote-block">
+            “एक कटिंग चाय, गरमा-गरम अखबार और लता जी की आवाज़।”
+            <span class="chapter-quote-author">— Old Delhi Alleyway, 1988</span>
+          </div>
+        </div>
+        <div class="chapter-visual-node" 
+             style="background-image: url('/assets/artwork.png'); background-position: 12% 64%; background-size: 280%;"
+             data-art-title="02 • Bharat Chai Stall & Samovar"
+             data-art-desc="Old corner tea stall with steaming brass samovar, clay kullhad cups, morning newspapers, and blackboard chalk quotes."
+             title="Click to view full authentic master artwork">
+          <div class="visual-node-expand-pill">🔍 VIEW ARTWORK</div>
+          <div class="visual-node-overlay">
+            <span class="visual-node-stamp">MEMORY NODE 02 &bull; BHARAT CHAI STALL</span>
+            <span class="visual-node-caption">Steaming brass samovar, morning newspapers & cardamom aroma</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Chapter 3 -->
+      <article class="memory-chapter-card" id="chapter-3">
+        <div class="chapter-glass-panel liquid-glass">
+          <div class="chapter-time-badge">11:30 AM &bull; THE ROOFTOP BATTLES</div>
+          <h3 class="chapter-heading">छत पर पतंगें, माँझा और ‘आई बो!’ का शोर।</h3>
+          <p class="chapter-body-text">
+            By noon, every terrace was packed with families. Glass-coated manjha wrapped around fingers, squinting into the August sun, screaming with joy as a rival kite tumbled across the blue sky into neighboring courtyards.
+          </p>
+          <div class="chapter-quote-block">
+            “The entire sky became our tricolor playground.”
+            <span class="chapter-quote-author">— Terrace of Jaipur, 2002</span>
+          </div>
+        </div>
+        <div class="chapter-visual-node" 
+             style="background-image: url('/assets/artwork.png'); background-position: 85% 58%; background-size: 260%;"
+             data-art-title="03 • Boy with Tiranga & Balcony View"
+             data-art-desc="A young boy standing proud on the carved stone ledge, holding the national tricolor aloft into the golden sunrise above the streets."
+             title="Click to view full authentic master artwork">
+          <div class="visual-node-expand-pill">🔍 VIEW ARTWORK</div>
+          <div class="visual-node-overlay">
+            <span class="visual-node-stamp">MEMORY NODE 03 &bull; BOY WITH TIRANGA</span>
+            <span class="visual-node-caption">Standing proud on the stone ledge with the fluttering tricolor</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Chapter 4 -->
+      <article class="memory-chapter-card reverse-layout" id="chapter-4">
+        <div class="chapter-glass-panel liquid-glass">
+          <div class="chapter-time-badge">02:00 PM &bull; THE COLONY SWEET BOX</div>
+          <h3 class="chapter-heading">अखबार के लिफ़ाफ़े में गरम जलेबी और बूंदी।</h3>
+          <p class="chapter-body-text">
+            Standing in queue outside the local halwai. Golden, syrup-soaked jalebis handed out in fresh newspaper cones, sticky fingers wiped onto trouser pockets, sharing sweets with friends across community gates.
+          </p>
+          <div class="chapter-quote-block">
+            “15 August had its own taste — crisp saffron sweetness.”
+            <span class="chapter-quote-author">— Lucknow Chowk, 1994</span>
+          </div>
+        </div>
+        <div class="chapter-visual-node" 
+             style="background-image: url('/assets/artwork.png'); background-position: 42% 92%; background-size: 240%;"
+             data-art-title="04 • 15 August Rangoli & Festive Street"
+             data-art-desc="Cobblestone streets decorated with chalk floral rangoli, tricolor festoons, and neighborhood celebration gatherings."
+             title="Click to view full authentic master artwork">
+          <div class="visual-node-expand-pill">🔍 VIEW ARTWORK</div>
+          <div class="visual-node-overlay">
+            <span class="visual-node-stamp">MEMORY NODE 04 &bull; COLONY FESTOONS</span>
+            <span class="visual-node-caption">15 August chalk rangoli, marigold flowers & street festoons</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Chapter 5 -->
+      <article class="memory-chapter-card" id="chapter-5">
+        <div class="chapter-glass-panel liquid-glass">
+          <div class="chapter-time-badge">06:00 PM &bull; THE GOLDEN DUSK</div>
+          <h3 class="chapter-heading">शाम का धीमा उजाला और राष्ट्रगान।</h3>
+          <p class="chapter-body-text">
+            As twilight washed over balconies, families gathered by television sets to watch cultural dances from every state. The sound of ‘Jana Gana Mana’ bringing everyone to attention, hearts full of quiet gratitude.
+          </p>
+          <div class="chapter-quote-block">
+            “एक देश। अनगिनत चेहरे। एक ही धड़कन।”
+            <span class="chapter-quote-author">— All India Radio Broadcast</span>
+          </div>
+        </div>
+        <div class="chapter-visual-node" 
+             style="background-image: url('/assets/artwork.png'); background-position: 55% 14%; background-size: 220%;"
+             data-art-title="05 • Soaring Kites over Heritage Skyline"
+             data-art-desc="Tricolor paper kites floating peacefully across the golden dawn above temple shikhars, church spires, and mosque minarets."
+             title="Click to view full authentic master artwork">
+          <div class="visual-node-expand-pill">🔍 VIEW ARTWORK</div>
+          <div class="visual-node-overlay">
+            <span class="visual-node-stamp">MEMORY NODE 05 &bull; GOLDEN SKYLINE</span>
+            <span class="visual-node-caption">Tricolor kites dancing in the sky above ancient temple domes</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ==========================================================================
+         COMMUNITY MEMORY WALL & POSTCARDS
+         ========================================================================== -->
+    <section class="memory-wall-section" id="community-wall">
+      <div class="memory-wall-card liquid-glass">
+        <div class="journey-kicker">VOICES OF THE NATION</div>
+        <h2 class="wall-title">एक देश। करोड़ों यादें।</h2>
+        <p class="wall-subtext">
+          Pin your own childhood memory to our collective Indian memory wall.
+        </p>
+
+        <button class="primary-btn" id="open-memory-modal-btn">
+          <span>✍️ PIN YOUR MEMORY</span>
+        </button>
+
+        <div class="community-memories-grid" id="community-memories-grid">
+          <!-- Default Seed Memories -->
+          <div class="memory-postcard">
+            <span class="postcard-pin">📌</span>
+            <div class="postcard-postage-stamp" style="background-image: url('/assets/artwork.png');">
+              <span class="stamp-deno">15 AUG</span>
+            </div>
+            <p class="postcard-text">“Running through the colony with my grandfather on his scooter, holding a small paper flag so it would flutter in the wind.”</p>
+            <div class="postcard-author">
+              <span>— Rahul K.</span>
+              <span>Nagpur, 1998</span>
+            </div>
+          </div>
+
+          <div class="memory-postcard">
+            <span class="postcard-pin">📌</span>
+            <div class="postcard-postage-stamp" style="background-image: url('/assets/artwork.png'); background-position: 45% 72%;">
+              <span class="stamp-deno">15 AUG</span>
+            </div>
+            <p class="postcard-text">“The sweet smell of Boondi and hot jalebis handed to us after the flag hoisting ceremony at school.”</p>
+            <div class="postcard-author">
+              <span>— Ananya S.</span>
+              <span>Kolkata, 2004</span>
+            </div>
+          </div>
+
+          <div class="memory-postcard">
+            <span class="postcard-pin">📌</span>
+            <div class="postcard-postage-stamp" style="background-image: url('/assets/artwork.png'); background-position: 12% 64%;">
+              <span class="stamp-deno">15 AUG</span>
+            </div>
+            <p class="postcard-text">“Lata Didi's voice coming from every neighbor's window at 8 AM. Goosebumps every single August.”</p>
+            <div class="postcard-author">
+              <span>— Vikramaditya</span>
+              <span>Varanasi, 1992</span>
+            </div>
+          </div>
+
+          <div class="memory-postcard">
+            <span class="postcard-pin">📌</span>
+            <div class="postcard-postage-stamp" style="background-image: url('/assets/artwork.png'); background-position: 55% 14%;">
+              <span class="stamp-deno">15 AUG</span>
+            </div>
+            <p class="postcard-text">“Climbing the water tank ladder on our terrace just to untangle a tricolor kite from the TV antenna.”</p>
+            <div class="postcard-author">
+              <span>— Simranjeet</span>
+              <span>Amritsar, 2001</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       ROTATING NOSTALGIC WHISPER QUOTE (CENTER FLOATING)
+       ========================================================================== -->
+  <div class="whisper-quote-dock visible" id="whisper-dock">
+    <div class="whisper-text" id="whisper-text">
+      “झंडा छोटा था, पर ख़ुशी आसमान जितनी बड़ी थी।”
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       FLOATING LIQUID GLASS MUSIC PLAYER
+       ========================================================================== -->
+  <aside class="floating-audio-dock" id="music-player-dock" aria-label="Music Player">
+    <!-- Hidden Youtube Player for Authentic Audio Playlist -->
+    <div id="yt-player-host" style="position:absolute; width:1px; height:1px; opacity:0; pointer-events:none;"></div>
+
+    <div class="vinyl-artwork-wrapper">
+      <div class="vinyl-disc" id="vinyl-disc">
+        <div class="vinyl-center-art" id="vinyl-art" title="Now playing artwork"></div>
+      </div>
+    </div>
+
+    <div class="player-meta-column">
+      <div class="player-kicker-row">
+        <span class="player-badge">Now Playing</span>
+        <div class="audio-visualizer-bars" id="audio-bars">
+          <div class="v-bar"></div>
+          <div class="v-bar"></div>
+          <div class="v-bar"></div>
+          <div class="v-bar"></div>
+          <div class="v-bar"></div>
+          <div class="v-bar"></div>
+        </div>
+      </div>
+      <div class="track-name" id="player-track-name">Vande Mataram • Sitar & Santoor</div>
+      <div class="track-artist" id="player-track-artist">Classical Morning Raga</div>
+    </div>
+
+    <div class="player-controls-row">
+      <button class="player-action-btn" id="btn-audio-prev" aria-label="Previous Track">&#9198;</button>
+      <button class="player-play-btn" id="btn-audio-play" aria-label="Play or Pause">&#9658;</button>
+      <button class="player-action-btn" id="btn-audio-next" aria-label="Next Track">&#9197;</button>
+    </div>
+
+    <div class="player-seek-row">
+      <span class="player-time" id="player-time-cur">0:00</span>
+      <div class="player-progress-dock" id="player-progress-dock">
+        <div class="player-progress-fill" id="player-progress-fill"></div>
+        <div class="player-progress-knob" id="player-progress-knob"></div>
+      </div>
+      <span class="player-time" id="player-time-total">0:00</span>
+    </div>
+  </aside>
+
+  <!-- Keyboard Shortcuts Hint -->
+  <div class="keyboard-legend-bar">
+    <kbd>SPACE</kbd> PLAY/PAUSE &nbsp;&bull;&nbsp;
+    <kbd>F</kbd> HOIST FLAG &nbsp;&bull;&nbsp;
+    <kbd>M</kbd> MUTE &nbsp;&bull;&nbsp; 
+    <kbd>1-5</kbd> JUMP SCENE
+  </div>
+
+  <!-- ==========================================================================
+       USER MEMORY INPUT MODAL
+       ========================================================================== -->
+  <div class="memory-input-modal" id="memory-input-modal">
+    <div class="memory-modal-box">
+      <button class="close-radio-btn" id="close-memory-modal">&times;</button>
+      <h3 class="modal-headline">अपनी 15 अगस्त की याद दर्ज करें</h3>
+      <p class="modal-sub">What do you remember about Independence Day when you were growing up?</p>
+
+      <form id="memory-form">
+        <textarea class="styled-textarea" id="user-memory-text" placeholder="The school assembly, the rooftop kites, the smell of chai and jalebis, that one song playing on the loudspeaker..." required></textarea>
+        <input type="text" class="styled-input" id="user-memory-name" placeholder="Your Name & City (e.g. Kabir from Bhopal, 1999)" required>
+        <button type="submit" class="primary-btn" style="width: 100%; justify-content: center;">
+          <span>PIN MEMORY TO WALL</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       ARTWORK LIGHTBOX & HIGH-RES VIEWER MODAL
+       ========================================================================== -->
+  <div class="artwork-lightbox-modal" id="artwork-lightbox-modal" aria-hidden="true">
+    <div class="lightbox-modal-content liquid-glass">
+      <button class="close-radio-btn" id="close-artwork-lightbox" aria-label="Close Artwork Viewer">&times;</button>
+      <div class="lightbox-image-container">
+        <img src="/assets/artwork.png" alt="15 August - India, As We Remember It" id="lightbox-master-img" class="lightbox-master-img">
+        <div class="lightbox-stamp-tag">🇮🇳 MASTER EDITORIAL ARTWORK • 15 AUGUST</div>
+      </div>
+      <div class="lightbox-details-panel">
+        <div class="lightbox-node-kicker" id="lightbox-node-kicker">AUTHENTIC ILLUSTRATED MEMORY</div>
+        <h3 class="lightbox-node-title" id="lightbox-node-title">15 August — India, As We Remember It</h3>
+        <p class="lightbox-node-desc" id="lightbox-node-desc">Rich painterly editorial illustration capturing the authentic senses of childhood Independence Day in India.</p>
+        <div class="lightbox-actions-row">
+          <a href="/assets/artwork.png" download="15-August-India-As-We-Remember-It.png" class="secondary-glass-btn" style="padding: 0.65rem 1.4rem; font-size: 0.7rem;">
+            <span>📥 DOWNLOAD MASTER ARTWORK (1536x1024)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       CORE APPLICATION JAVASCRIPT
+       ========================================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // ==========================================
+      // 1. CINEMATIC BACKGROUND VIDEO CONTROLLER
+      // ==========================================
+      const bgVideo = document.getElementById('bg-video');
+      const toggleVideoMotionBtn = document.getElementById('toggle-video-motion');
+      const motionToggleIcon = document.getElementById('motion-toggle-icon');
+      let isVideoMotionActive = true;
+
+      // Resilient Autoplay Policy Assurance
+      function ensureVideoPlay() {
+        if (bgVideo) {
+          bgVideo.muted = true;
+          const playPromise = bgVideo.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {
+              // Auto-play was prevented; fallback on first user interaction
+              const resumeOnInteraction = () => {
+                bgVideo.play();
+                window.removeEventListener('click', resumeOnInteraction);
+                window.removeEventListener('touchstart', resumeOnInteraction);
+              };
+              window.addEventListener('click', resumeOnInteraction, { once: true });
+              window.addEventListener('touchstart', resumeOnInteraction, { once: true });
+            });
+          }
+        }
+      }
+      ensureVideoPlay();
+
+      // Pause video when tab is hidden to save GPU/battery; resume when active
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          if (bgVideo && !bgVideo.paused) bgVideo.pause();
+        } else {
+          if (bgVideo && isVideoMotionActive) bgVideo.play().catch(() => {});
+        }
+      });
+
+      // Video Motion Toggle
+      if (toggleVideoMotionBtn) {
+        toggleVideoMotionBtn.addEventListener('click', () => {
+          if (!bgVideo) return;
+          if (bgVideo.paused) {
+            bgVideo.play();
+            isVideoMotionActive = true;
+            if (motionToggleIcon) motionToggleIcon.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"/><rect x="13" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"/></svg>';
+            toggleVideoMotionBtn.title = 'Pause Background Motion';
+          } else {
+            bgVideo.pause();
+            isVideoMotionActive = false;
+            if (motionToggleIcon) motionToggleIcon.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.14v14a1 1 0 0 0 1.5.86l9-7a1 1 0 0 0 0-1.72l-9-7A1 1 0 0 0 8 5.14z" fill="currentColor" stroke="none"/></svg>';
+            toggleVideoMotionBtn.title = 'Resume Background Motion';
+          }
+        });
+      }
+
+      // Scene navigation links & active observer
+      const sceneTargets = [
+        '#hero',
+        '#chapter-1',
+        '#chapter-2',
+        '#chapter-3',
+        '#chapter-4'
+      ];
+
+      document.querySelectorAll('.scene-dot-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = parseInt(btn.dataset.slide, 10);
+          const target = document.querySelector(sceneTargets[idx]);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+      });
+
+      // Update scene dots on scroll
+      window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        const windowHeight = window.innerHeight;
+        
+        sceneTargets.forEach((sel, i) => {
+          const el = document.querySelector(sel);
+          if (!el) return;
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= windowHeight * 0.45 && rect.bottom >= windowHeight * 0.2) {
+            document.querySelectorAll('.scene-dot-btn').forEach((b, dotIdx) => {
+              b.classList.toggle('active', dotIdx === i);
+            });
+          }
+        });
+      }, { passive: true });
+
+      // ==========================================
+      // ARTWORK HOTSPOTS INTERACTIVE TOGGLE
+      // ==========================================
+      const hotspotsStage = document.getElementById('artwork-hotspots-stage');
+      const metaTagsGrid = document.getElementById('hero-meta-tags');
+      const toggleHotspotsNavBtn = document.getElementById('toggle-hotspots-btn');
+      const toggleHotspotsHeroBtn = document.getElementById('hotspots-hero-toggle');
+      let hotspotsActive = false;
+
+      function toggleHotspots() {
+        hotspotsActive = !hotspotsActive;
+        if (hotspotsStage) hotspotsStage.classList.toggle('active', hotspotsActive);
+        if (metaTagsGrid) metaTagsGrid.style.opacity = hotspotsActive ? '0.2' : '1';
+        
+        const label = hotspotsActive ? '✨ HIDE HOTSPOTS' : '🎨 EXPLORE ARTWORK';
+        if (toggleHotspotsNavBtn) toggleHotspotsNavBtn.innerText = label;
+        if (toggleHotspotsHeroBtn) toggleHotspotsHeroBtn.innerHTML = `<span>${label}</span>`;
+      }
+
+      if (toggleHotspotsNavBtn) toggleHotspotsNavBtn.addEventListener('click', toggleHotspots);
+      if (toggleHotspotsHeroBtn) toggleHotspotsHeroBtn.addEventListener('click', toggleHotspots);
+
+      // ==========================================
+      // 2. MOUSE FOLLOWING SUNLIGHT RADIAL LIGHT & PARALLAX
+      // ==========================================
+      const sunCursor = document.getElementById('sunlight-cursor');
+      let mouseX = window.innerWidth / 2;
+      let mouseY = window.innerHeight * 0.35;
+      let targetX = mouseX;
+      let targetY = mouseY;
+
+      window.addEventListener('mousemove', (e) => {
+        targetX = e.clientX;
+        targetY = e.clientY;
+      });
+
+      function renderSunlight() {
+        mouseX += (targetX - mouseX) * 0.08;
+        mouseY += (targetY - mouseY) * 0.08;
+
+        document.documentElement.style.setProperty('--mouse-x', `${mouseX}px`);
+        document.documentElement.style.setProperty('--mouse-y', `${mouseY}px`);
+
+        // Parallax displacement on background
+        const px = (mouseX / window.innerWidth - 0.5) * -16;
+        const py = (mouseY / window.innerHeight - 0.5) * -16;
+        document.documentElement.style.setProperty('--parallax-x', `${px}px`);
+        document.documentElement.style.setProperty('--parallax-y', `${py}px`);
+
+        requestAnimationFrame(renderSunlight);
+      }
+      renderSunlight();
+
+      // ==========================================
+      // 3. LIVE IST CLOCK
+      // ==========================================
+      const clockEl = document.getElementById('live-ist-clock');
+      function updateClock() {
+        const now = new Date();
+        // Indian Standard Time UTC +5:30
+        const istOffset = 5.5 * 60 * 60 * 1000;
+        const istTime = new Date(now.getTime() + istOffset + (now.getTimezoneOffset() * 60000));
+        let hours = istTime.getHours();
+        const minutes = String(istTime.getMinutes()).padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12 || 12;
+        if (clockEl) clockEl.innerText = `${hours}:${minutes} ${ampm} IST`;
+      }
+      updateClock();
+      setInterval(updateClock, 30000);
+
+      // ==========================================
+      // 3a. LIVE VISITOR COUNTER (real, cross-tab)
+      // ==========================================
+      const liveNowEls = ['live-now', 'stat-live-now'].map(id => document.getElementById(id)).filter(Boolean);
+      const liveTotalEls = ['live-total', 'stat-live-total'].map(id => document.getElementById(id)).filter(Boolean);
+      const VIS_KEY = 'ind-live-visitors';
+      const TOTAL_KEY = 'ind-total-visits';
+      const myId = Math.random().toString(36).slice(2);
+      const chan = ('BroadcastChannel' in window) ? new BroadcastChannel(VIS_KEY) : null;
+      const peers = new Map(); // id -> lastSeen timestamp
+      peers.set(myId, Date.now());
+
+      const totalVisits = (() => {
+        const t = parseInt(localStorage.getItem(TOTAL_KEY) || '0', 10) + 1;
+        localStorage.setItem(TOTAL_KEY, String(t));
+        return t;
+      })();
+
+      function renderLive() {
+        const now = Date.now();
+        peers.set(myId, now);
+        for (const [id, seen] of peers) if (now - seen > 4000) peers.delete(id);
+        const n = peers.size;
+        liveNowEls.forEach(el => el.innerText = n.toLocaleString());
+        liveTotalEls.forEach(el => el.innerText = totalVisits.toLocaleString());
+      }
+      renderLive();
+
+      if (chan) {
+        chan.onmessage = (e) => {
+          const { type, id } = e.data;
+          if (type === 'ping') { peers.set(id, Date.now()); chan.postMessage({ type: 'pong', id: myId }); }
+          if (type === 'pong') peers.set(id, Date.now());
+          if (type === 'bye') peers.delete(id);
+          renderLive();
+        };
+        chan.postMessage({ type: 'ping', id: myId });
+        setInterval(() => { chan.postMessage({ type: 'ping', id: myId }); renderLive(); }, 2000);
+        window.addEventListener('beforeunload', () => chan.postMessage({ type: 'bye', id: myId }));
+      } else {
+        setInterval(renderLive, 2000);
+      }
+
+      // ==========================================
+      // 3b. NAV TAB ACTIVE STATE ON SCROLL
+      // ==========================================
+      const navTabs = document.querySelectorAll('.nav-tab[data-tab]');
+      const tabTargets = { 'hero': '#hero', 'memories-journey': '#memories-journey' };
+      const tabObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const id = entry.target.id;
+          navTabs.forEach(t => t.classList.toggle('active', t.dataset.tab === id));
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      Object.values(tabTargets).forEach(sel => {
+        const el = document.querySelector(sel);
+        if (el) tabObserver.observe(el);
+      });
+
+      // ==========================================
+      // 4. KITES IN THE SKY (FLOATING CANVAS GRAPHICS)
+      // ==========================================
+      const kitesCanvas = document.getElementById('kites-canvas');
+      const kCtx = kitesCanvas.getContext('2d');
+      let kWidth = kitesCanvas.width = window.innerWidth;
+      let kHeight = kitesCanvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        kWidth = kitesCanvas.width = window.innerWidth;
+        kHeight = kitesCanvas.height = window.innerHeight;
+      });
+
+      const kites = [
+        { x: kWidth * 0.2, y: kHeight * 0.35, size: 28, vx: 0.25, vy: -0.15, color: '#EB7424', tailColor: '#FAF6EE', angle: 0.1, stringLen: 80 },
+        { x: kWidth * 0.65, y: kHeight * 0.25, size: 22, vx: 0.35, vy: 0.1, color: '#3D6B35', tailColor: '#EB7424', angle: -0.15, stringLen: 65 },
+        { x: kWidth * 0.82, y: kHeight * 0.45, size: 26, vx: -0.2, vy: -0.12, color: '#FAF6EE', tailColor: '#3D6B35', angle: 0.05, stringLen: 75 },
+        { x: kWidth * 0.45, y: kHeight * 0.18, size: 18, vx: 0.4, vy: 0.08, color: '#F3B552', tailColor: '#EB7424', angle: 0.2, stringLen: 55 }
+      ];
+
+      function drawDiamond(ctx, x, y, size, angle, color) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(angle);
+        ctx.beginPath();
+        ctx.moveTo(0, -size);
+        ctx.lineTo(size * 0.85, 0);
+        ctx.lineTo(0, size);
+        ctx.lineTo(-size * 0.85, 0);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Cross bamboo spines
+        ctx.beginPath();
+        ctx.moveTo(0, -size);
+        ctx.lineTo(0, size);
+        ctx.moveTo(-size * 0.85, 0);
+        ctx.quadraticCurveTo(0, -size * 0.25, size * 0.85, 0);
+        ctx.strokeStyle = 'rgba(120, 80, 40, 0.4)';
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+
+        // Tail
+        ctx.beginPath();
+        ctx.moveTo(0, size);
+        ctx.quadraticCurveTo(Math.sin(Date.now() * 0.003) * 15, size + 25, Math.cos(Date.now() * 0.003) * 10, size + 50);
+        ctx.strokeStyle = 'rgba(255,255,255,0.45)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      function animateKites() {
+        kCtx.clearRect(0, 0, kWidth, kHeight);
+        kites.forEach(k => {
+          k.x += k.vx + Math.sin(Date.now() * 0.001) * 0.3;
+          k.y += k.vy + Math.cos(Date.now() * 0.0012) * 0.2;
+          k.angle = Math.sin(Date.now() * 0.002 + k.x) * 0.12;
+
+          if (k.x > kWidth + 50) k.x = -50;
+          if (k.x < -50) k.x = kWidth + 50;
+          if (k.y > kHeight * 0.6) k.vy = -Math.abs(k.vy);
+          if (k.y < 50) k.vy = Math.abs(k.vy);
+
+          drawDiamond(kCtx, k.x, k.y, k.size, k.angle, k.color);
+        });
+        requestAnimationFrame(animateKites);
+      }
+      animateKites();
+
+      // ==========================================
+      // 5. AMBIENT DUST MOTES GENERATION
+      // ==========================================
+      const motesStage = document.getElementById('motes-stage');
+      const moteCount = window.innerWidth < 768 ? 16 : 32;
+      for (let i = 0; i < moteCount; i++) {
+        const mote = document.createElement('div');
+        mote.className = 'mote-particle';
+        const sz = Math.random() * 3.5 + 1.5;
+        mote.style.width = `${sz}px`;
+        mote.style.height = `${sz}px`;
+        mote.style.left = `${Math.random() * 100}vw`;
+        mote.style.animationDuration = `${14 + Math.random() * 20}s`;
+        mote.style.animationDelay = `${Math.random() * 12}s`;
+        motesStage.appendChild(mote);
+      }
+
+      // ==========================================
+      // 6. ROTATING WHISPER QUOTES
+      // ==========================================
+      const quotesList = [
+        "“झंडा छोटा था, पर ख़ुशी आसमान जितनी बड़ी थी।”",
+        "“15 August meant waking up early with unbridled pride.”",
+        "“छत पर पतंगें और नीचे लाउडस्पीकर पर देशभक्ति के गाने।”",
+        "“एक दिन जब पूरा मोहल्ला एक ही रंग में रंगा दिखता था।”",
+        "“School assembly. Spotless white uniform. Tiny tricolor pin.”",
+        "“वो सुबह कुछ अलग ही महकती थी — इलायची वाली चाय और बारिश।”",
+        "“कुछ यादें तारीख़ से नहीं, लता जी की आवाज़ से वापस आती हैं।”",
+        "“गरमा-गरम जलेबी का वो अखबार वाला लिफ़ाफ़ा।”"
+      ];
+
+      const whisperDock = document.getElementById('whisper-dock');
+      const whisperText = document.getElementById('whisper-text');
+      let quoteIdx = 0;
+
+      function cycleWhisper() {
+        whisperDock.classList.remove('visible');
+        setTimeout(() => {
+          quoteIdx = (quoteIdx + 1) % quotesList.length;
+          whisperText.innerText = quotesList[quoteIdx];
+          whisperDock.classList.add('visible');
+        }, 1200);
+      }
+      setInterval(cycleWhisper, 8500);
+
+      // ==========================================
+      // 7. INTERSECTION OBSERVER FOR CHAPTERS SCROLL
+      // ==========================================
+      const chapterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('.memory-chapter-card').forEach(el => chapterObserver.observe(el));
+
+      // ==========================================
+      // 8. PETALS & MARIGOLD CELEBRATION EFFECT (HOIST FLAG)
+      // ==========================================
+      const cCanvas = document.getElementById('celebration-canvas');
+      const cCtx = cCanvas.getContext('2d');
+      let cWidth = cCanvas.width = window.innerWidth;
+      let cHeight = cCanvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        cWidth = cCanvas.width = window.innerWidth;
+        cHeight = cCanvas.height = window.innerHeight;
+      });
+
+      let petals = [];
+      const petalColors = ['#EB7424', '#F3B552', '#3D6B35', '#FAF6EE', '#F7974E', '#B35441'];
+
+      function spawnPetalsShower() {
+        for (let i = 0; i < 90; i++) {
+          petals.push({
+            x: Math.random() * cWidth,
+            y: -20 - Math.random() * 100,
+            size: Math.random() * 8 + 5,
+            vx: (Math.random() - 0.5) * 2.5,
+            vy: Math.random() * 3 + 2.5,
+            rotation: Math.random() * 360,
+            vRot: (Math.random() - 0.5) * 6,
+            color: petalColors[Math.floor(Math.random() * petalColors.length)],
+            opacity: 1
+          });
+        }
+      }
+
+      function renderPetals() {
+        cCtx.clearRect(0, 0, cWidth, cHeight);
+        for (let i = petals.length - 1; i >= 0; i--) {
+          const p = petals[i];
+          p.x += p.vx + Math.sin(p.y * 0.02) * 1.2;
+          p.y += p.vy;
+          p.rotation += p.vRot;
+
+          cCtx.save();
+          cCtx.translate(p.x, p.y);
+          cCtx.rotate((p.rotation * Math.PI) / 180);
+          cCtx.globalAlpha = p.opacity;
+          cCtx.fillStyle = p.color;
+
+          // Draw marigold / rose petal shape
+          cCtx.beginPath();
+          cCtx.ellipse(0, 0, p.size, p.size * 0.6, 0, 0, Math.PI * 2);
+          cCtx.fill();
+          cCtx.restore();
+
+          if (p.y > cHeight + 20) {
+            petals.splice(i, 1);
+          }
+        }
+        if (petals.length > 0) {
+          requestAnimationFrame(renderPetals);
+        }
+      }
+
+      // Flag hoist trigger action
+      const flagBtn = document.getElementById('flag-hoist-trigger');
+      const heroHeadline = document.getElementById('hero-headline');
+      const origHeadline = heroHeadline.innerHTML;
+
+      flagBtn.addEventListener('click', () => {
+        spawnPetalsShower();
+        renderPetals();
+
+        heroHeadline.innerHTML = "जय हिन्द! <span class='highlight-saffron'>स्वतंत्रता दिवस की शुभकामनाएँ</span> 🇮🇳";
+        setTimeout(() => {
+          heroHeadline.innerHTML = origHeadline;
+        }, 4000);
+      });
+
+      // ==========================================
+      // 9. WEB AUDIO AMBIENT SOUNDSCAPE (BIRDS & HARMONIUM SINE DRONE)
+      // ==========================================
+      let audioCtx = null;
+      let isAmbientActive = false;
+      let ambientGain = null;
+      let birdInterval = null;
+
+      function initAmbientAudio() {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+
+        if (!ambientGain) {
+          ambientGain = audioCtx.createGain();
+          ambientGain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+          ambientGain.connect(audioCtx.destination);
+
+          // Warm harmonic drone (C# major tanpura / harmonium frequency ~ 138.59 Hz, 207.65 Hz)
+          const osc1 = audioCtx.createOscillator();
+          const osc2 = audioCtx.createOscillator();
+          osc1.type = 'triangle';
+          osc2.type = 'sine';
+          osc1.frequency.setValueAtTime(138.59, audioCtx.currentTime); // C#3
+          osc2.frequency.setValueAtTime(207.65, audioCtx.currentTime); // G#3
+
+          const oscGain = audioCtx.createGain();
+          oscGain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+          osc1.connect(oscGain);
+          osc2.connect(oscGain);
+          oscGain.connect(ambientGain);
+
+          osc1.start();
+          osc2.start();
+        }
+
+        // Random sweet bird chirp synthesis
+        birdInterval = setInterval(() => {
+          if (!isAmbientActive || !audioCtx) return;
+          const birdOsc = audioCtx.createOscillator();
+          const bGain = audioCtx.createGain();
+          const t = audioCtx.currentTime;
+
+          birdOsc.type = 'sine';
+          const baseFreq = 2200 + Math.random() * 800;
+          birdOsc.frequency.setValueAtTime(baseFreq, t);
+          birdOsc.frequency.exponentialRampToValueAtTime(baseFreq + 600, t + 0.08);
+          birdOsc.frequency.exponentialRampToValueAtTime(baseFreq - 400, t + 0.18);
+
+          bGain.gain.setValueAtTime(0.04, t);
+          bGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
+
+          birdOsc.connect(bGain);
+          bGain.connect(audioCtx.destination);
+          birdOsc.start(t);
+          birdOsc.stop(t + 0.25);
+        }, 3200);
+      }
+
+      const ambientToggle = document.getElementById('ambient-sound-toggle');
+      ambientToggle.addEventListener('click', () => {
+        isAmbientActive = !isAmbientActive;
+        ambientToggle.classList.toggle('active-glow', isAmbientActive);
+        if (isAmbientActive) {
+          initAmbientAudio();
+          if (ambientGain) ambientGain.gain.setTargetAtTime(0.12, audioCtx.currentTime, 0.5);
+          document.getElementById('ambient-sound-icon').innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor" stroke="none"/><path d="M15 9a5 5 0 0 1 0 6"/><path d="M17.5 7a8 8 0 0 1 0 10"/></svg>';
+        } else {
+          if (ambientGain) ambientGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.5);
+          if (birdInterval) clearInterval(birdInterval);
+          document.getElementById('ambient-sound-icon').innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor" stroke="none"/><path d="M16 9l4 6M20 9l-4 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
+        }
+      });
+
+      // ==========================================
+      // 10. MUSIC PLAYER ENGINE (YOUTUBE & WEB AUDIO BACKUP)
+      // ==========================================
+      const tracks = [
+        { title: "Vande Mataram • Sitar & Santoor", artist: "Classical Morning Raga", ytId: "9qH9aTfJ9QY" },
+        { title: "Ae Mere Watan Ke Logon", artist: "Lata Mangeshkar (1963)", ytId: "1p0G8_p98X0" },
+        { title: "Maa Tujhe Salaam", artist: "A.R. Rahman (1997)", ytId: "eYc1eNl0j_k" },
+        { title: "Sandese Aate Hain", artist: "Border (1997)", ytId: "qWqT2n18wV0" },
+        { title: "Yeh Desh Hai Veer Jawano Ka", artist: "Naya Daur (1957)", ytId: "0bM7nQc62rI" }
+      ];
+
+      let currentTrackIdx = 0;
+      let isPlaying = false;
+      let ytPlayer = null;
+
+      const trackNameEl = document.getElementById('player-track-name');
+      const trackArtistEl = document.getElementById('player-track-artist');
+      const playBtn = document.getElementById('btn-audio-play');
+      const prevBtn = document.getElementById('btn-audio-prev');
+      const nextBtn = document.getElementById('btn-audio-next');
+      const vinylDisc = document.getElementById('vinyl-disc');
+      const vinylArt = document.getElementById('vinyl-art');
+      const visualizerBars = document.querySelectorAll('.v-bar');
+      const progressFill = document.getElementById('player-progress-fill');
+      const progressKnob = document.getElementById('player-progress-knob');
+      const progressDock = document.getElementById('player-progress-dock');
+      const timeCurEl = document.getElementById('player-time-cur');
+      const timeTotalEl = document.getElementById('player-time-total');
+
+      function fmtTime(s) {
+        if (!isFinite(s) || s < 0) s = 0;
+        const m = Math.floor(s / 60);
+        const sec = Math.floor(s % 60);
+        return `${m}:${sec.toString().padStart(2, '0')}`;
+      }
+
+      function setProgress(pct, cur, dur) {
+        pct = Math.min(100, Math.max(0, pct));
+        progressFill.style.width = `${pct}%`;
+        progressKnob.style.left = `${pct}%`;
+        if (cur != null) timeCurEl.innerText = fmtTime(cur);
+        if (dur != null && dur > 0) timeTotalEl.innerText = fmtTime(dur);
+      }
+
+      // Seek: click + drag on the progress dock
+      let seeking = false;
+      const seekFromEvent = (e) => {
+        if (!ytPlayer || !ytPlayer.seekTo || !ytPlayer.getDuration) return;
+        const rect = progressDock.getBoundingClientRect();
+        const x = Math.min(rect.right, Math.max(rect.left, (e.touches ? e.touches[0].clientX : e.clientX)));
+        const pct = ((x - rect.left) / rect.width) * 100;
+        const dur = ytPlayer.getDuration() || 0;
+        setProgress(pct, (pct / 100) * dur, dur);
+        return pct;
+      };
+      const startSeek = (e) => {
+        const pct = seekFromEvent(e);
+        if (pct == null) return;
+        seeking = true;
+        progressDock.classList.add('dragging');
+        const target = ytPlayer.getDuration ? (pct / 100) * (ytPlayer.getDuration() || 0) : 0;
+        if (ytPlayer.seekTo) ytPlayer.seekTo(target, true);
+        e.preventDefault();
+      };
+      const moveSeek = (e) => { if (seeking) { const pct = seekFromEvent(e); if (pct != null && ytPlayer.seekTo) ytPlayer.seekTo((pct / 100) * (ytPlayer.getDuration() || 0), true); } };
+      const endSeek = () => { seeking = false; progressDock.classList.remove('dragging'); };
+
+      progressDock.addEventListener('pointerdown', startSeek);
+      window.addEventListener('pointermove', moveSeek);
+      window.addEventListener('pointerup', endSeek);
+
+      function setTrackMeta(idx) {
+        const t = tracks[idx] || tracks[0];
+        trackNameEl.innerText = t.title;
+        trackArtistEl.innerText = t.artist;
+        // YouTube thumbnail with graceful fallback to local artwork
+        const tryThumb = (url) => {
+          const probe = new Image();
+          probe.onload = () => {
+            if (probe.naturalWidth > 120) vinylArt.style.backgroundImage = `url('${url}')`;
+            else vinylArt.style.backgroundImage = "url('/assets/artwork.png')";
+          };
+          probe.onerror = () => {
+            vinylArt.style.backgroundImage = "url('/assets/artwork.png')";
+          };
+          probe.src = url;
+        };
+        tryThumb(`https://i.ytimg.com/vi/${t.ytId}/mqdefault.jpg`);
+      }
+
+      // Match a YT video title/author back to our track list for artwork
+      function syncArtFromVideo() {
+        try {
+          if (!ytPlayer || !ytPlayer.getPlaylist) return;
+          const idx = ytPlayer.getPlaylistIndex();
+          if (typeof idx === 'number' && idx >= 0 && idx < tracks.length) {
+            currentTrackIdx = idx;
+            setTrackMeta(idx);
+          }
+        } catch (e) { /* playlist not ready yet */ }
+      }
+
+      // Load YouTube IFrame API
+      window.onYouTubeIframeAPIReady = function() {
+        ytPlayer = new YT.Player('yt-player-host', {
+          height: '1',
+          width: '1',
+          playerVars: {
+            listType: 'playlist',
+            list: 'PLtp23GqaHmiAJgvaHYI3UULaqgcVOKwNd',
+            autoplay: 0,
+            controls: 0
+          },
+          events: {
+            'onReady': () => {
+              setTrackMeta(0);
+            },
+            'onStateChange': (e) => {
+              if (e.data === YT.PlayerState.PLAYING) {
+                setPlayState(true);
+                syncArtFromVideo();
+                const data = ytPlayer.getVideoData();
+                if (data && data.title) {
+                  trackNameEl.innerText = data.title;
+                  trackArtistEl.innerText = data.author || "Patriotic Classic";
+                }
+              } else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) {
+                setPlayState(false);
+              }
+            }
+          }
+        });
+      };
+
+      const tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(tag);
+      setTrackMeta(0);
+
+      function setPlayState(playing) {
+        isPlaying = playing;
+        playBtn.innerHTML = isPlaying ? '&#10074;&#10074;' : '&#9658;';
+        vinylDisc.classList.toggle('playing', isPlaying);
+        visualizerBars.forEach(b => b.classList.toggle('animating', isPlaying));
+      }
+
+      function toggleMusic() {
+        if (ytPlayer && ytPlayer.playVideo) {
+          if (isPlaying) {
+            ytPlayer.pauseVideo();
+          } else {
+            ytPlayer.playVideo();
+          }
+        } else {
+          // Fallback simulation toggle
+          setPlayState(!isPlaying);
+        }
+      }
+
+      playBtn.addEventListener('click', toggleMusic);
+      prevBtn.addEventListener('click', () => {
+        if (ytPlayer && ytPlayer.previousVideo) {
+          ytPlayer.previousVideo();
+        } else {
+          currentTrackIdx = (currentTrackIdx - 1 + tracks.length) % tracks.length;
+          setTrackMeta(currentTrackIdx);
+        }
+      });
+      nextBtn.addEventListener('click', () => {
+        if (ytPlayer && ytPlayer.nextVideo) {
+          ytPlayer.nextVideo();
+        } else {
+          currentTrackIdx = (currentTrackIdx + 1) % tracks.length;
+          setTrackMeta(currentTrackIdx);
+        }
+      });
+
+      // Progress bar updater
+      setInterval(() => {
+        if (ytPlayer && isPlaying && ytPlayer.getCurrentTime && !seeking) {
+          const cur = ytPlayer.getCurrentTime();
+          const dur = ytPlayer.getDuration();
+          if (dur > 0) {
+            setProgress((cur / dur) * 100, cur, dur);
+          }
+        }
+      }, 500);
+
+      // ==========================================
+      // 11. USER MEMORY GUESTBOOK MODAL & SUBMISSION
+      // ==========================================
+      const memoryModal = document.getElementById('memory-input-modal');
+      const openMemoryModalBtn = document.getElementById('open-memory-modal-btn');
+      const openMemoryHeroBtn = document.getElementById('open-memory-modal-hero');
+      const closeMemoryModal = document.getElementById('close-memory-modal');
+      const memoryForm = document.getElementById('memory-form');
+      const memoriesGrid = document.getElementById('community-memories-grid');
+
+      function openModal() { memoryModal.classList.add('active'); }
+      function closeModal() { memoryModal.classList.remove('active'); }
+
+      openMemoryModalBtn.addEventListener('click', openModal);
+      if (openMemoryHeroBtn) openMemoryHeroBtn.addEventListener('click', openModal);
+      closeMemoryModal.addEventListener('click', closeModal);
+
+      memoryForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const text = document.getElementById('user-memory-text').value.trim();
+        const author = document.getElementById('user-memory-name').value.trim();
+
+          if (text && author) {
+          const card = document.createElement('div');
+          card.className = 'memory-postcard';
+          const stampPos = ['84% 56%', '45% 72%', '12% 64%', '55% 14%', '42% 92%'][Math.floor(Math.random() * 5)];
+          card.innerHTML = `
+            <span class="postcard-pin">📌</span>
+            <div class="postcard-postage-stamp" style="background-image: url('/assets/artwork.png'); background-position: ${stampPos};">
+              <span class="stamp-deno">15 AUG</span>
+            </div>
+            <p class="postcard-text">“${text}”</p>
+            <div class="postcard-author">
+              <span>— ${author}</span>
+              <span>Just Now</span>
+            </div>
+          `;
+          memoriesGrid.prepend(card);
+          closeModal();
+          memoryForm.reset();
+
+          // Scroll into view
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          spawnPetalsShower();
+          renderPetals();
+        }
+      });
+
+      // ==========================================
+      // 13. MASTER ARTWORK LIGHTBOX MODAL CONTROLLER
+      // ==========================================
+      const artworkLightbox = document.getElementById('artwork-lightbox-modal');
+      const closeLightboxBtn = document.getElementById('close-artwork-lightbox');
+      const lightboxNodeKicker = document.getElementById('lightbox-node-kicker');
+      const lightboxNodeTitle = document.getElementById('lightbox-node-title');
+      const lightboxNodeDesc = document.getElementById('lightbox-node-desc');
+
+      function openArtworkLightbox(title, desc) {
+        if (lightboxNodeTitle && title) lightboxNodeTitle.innerText = title;
+        if (lightboxNodeDesc && desc) lightboxNodeDesc.innerText = desc;
+        if (lightboxNodeKicker) lightboxNodeKicker.innerText = "AUTHENTIC ILLUSTRATED MEMORY";
+        if (artworkLightbox) {
+          artworkLightbox.classList.add('active');
+          artworkLightbox.setAttribute('aria-hidden', 'false');
+        }
+      }
+
+      function closeArtworkLightbox() {
+        if (artworkLightbox) {
+          artworkLightbox.classList.remove('active');
+          artworkLightbox.setAttribute('aria-hidden', 'true');
+        }
+      }
+
+      if (closeLightboxBtn) closeLightboxBtn.addEventListener('click', closeArtworkLightbox);
+      if (artworkLightbox) {
+        artworkLightbox.addEventListener('click', (e) => {
+          if (e.target === artworkLightbox) closeArtworkLightbox();
+        });
+      }
+
+      // Attach click handlers to all chapter visual nodes
+      document.querySelectorAll('.chapter-visual-node').forEach(node => {
+        node.addEventListener('click', () => {
+          const title = node.getAttribute('data-art-title') || "15 August — India, As We Remember It";
+          const desc = node.getAttribute('data-art-desc') || "Rich painterly editorial illustration capturing the authentic senses of childhood Independence Day in India.";
+          openArtworkLightbox(title, desc);
+        });
+      });
+
+      // Also allow clicking on the vinyl center art
+      vinylArt.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openArtworkLightbox("Master Artwork • Saffron & Sandalwood Record", "The authentic visual north star for 15 August — India, As We Remember It.");
+      });
+
+      // ==========================================
+      // 14. KEYBOARD SHORTCUTS
+      // ==========================================
+      document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+        if (e.key === 'Escape') {
+          closeArtworkLightbox();
+          closeModal();
+          return;
+        }
+
+        switch(e.key.toLowerCase()) {
+          case ' ':
+            e.preventDefault();
+            toggleMusic();
+            break;
+          case 'f':
+            flagBtn.click();
+            break;
+          case 'm':
+            ambientToggle.click();
+            break;
+          case '1':
+          case '2':
+          case '3':
+          case '4':
+          case '5':
+            const idx = parseInt(e.key, 10) - 1;
+            switchSlide(idx);
+            break;
+        }
+      });
+
+    });
+  </script>
+</body>
+</html>
